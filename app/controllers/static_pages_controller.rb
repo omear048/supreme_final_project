@@ -5,5 +5,8 @@ class StaticPagesController < ApplicationController
 
   def help
   end
-  
+
+  def account
+  end
+
 end

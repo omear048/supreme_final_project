@@ -7,6 +7,7 @@ ruby '2.5.0'
 gem 'devise'
 gem 'bootstrap-sass', '2.3.2.0'# HTML & CSS Page Design  
 gem 'sprockets', '3.7.2' #HTML & CSS Page Design
+gem 'mailcatcher' #Used for testing the sending of emails on a local server
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'
