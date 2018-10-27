@@ -1,0 +1,23 @@
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <%= link_to "supreme new york", root_path , id: "logo" %> 
+      <nav>
+        <ul class="nav pull-right">
+          <li><%= link_to "Home",  root_path  %></li>
+          <li><%= link_to "Shop", "https://www.supremenewyork.com/shop/all" %></li>
+          <% if signed_in? %>
+            <li> 
+              <%= link_to "Sign Out", destroy_user_session_path, method: "delete" %>
+            </li>
+          <% else %>
+            <li>
+              <%= link_to "Member Login", new_user_session_path %>
+            </li>
+          <% end %> 
+          <li><%= link_to "Help", help_path %></li>
+        </ul> 
+      </nav>
+    </div>
+  </div>
+</header>
