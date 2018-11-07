@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  price: 
+  price: 
+  picture_url: MyString
+  user_id: 1
+  sold: false
+
+two:
+  title: MyString
+  price: 
+  price: 
+  picture_url: MyString
+  user_id: 1
+  sold: false
