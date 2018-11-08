@@ -1,7 +1,10 @@
+#Controller for all of the product work
 require 'pry'
+
 
 class ProductsController < ApplicationController
 
+  #???? - List a new product (List Item Page)
   def new 
     @user = current_user
     @product = Product.new(user: @user) #@product = current_user.products.build
@@ -13,7 +16,7 @@ class ProductsController < ApplicationController
     
   end
 
-  # show a collection/many of products
+  # Show a collection/many of products (Shopping Page)
   def index
     @user = current_user  
     #@product = Product.new(user: @user)
@@ -23,6 +26,7 @@ class ProductsController < ApplicationController
     @add_product = ProductsUser.new
   end
 
+  #List a new product (List Item Page)
   def create
     @product = current_user.products.build(product_params)
     if @product.save 
@@ -34,10 +38,45 @@ class ProductsController < ApplicationController
 
   end
 
+  def edit 
+    @product = Product.find(params[:product_id])
+
+  end
+
+  def update
+    @product = Product.find(params[:id])
+
+
+    if @product.update_attributes(product_params)
+      flash[:success] = "Profile updated"
+      redirect_to selling_product_path
+    else
+      #Make updates here later
+      redirect_to edit_listed_product_path
+    end
+  end
+
   def cart
   end
 
+  #Items that a user has for sale 
+  def selling
+    @user = current_user
+    @products = Product.all
+
+
+
+  end
+
+  #Removing a product that a user listed 
   def destroy
+    Product.find(params[:product_id]).destroy
+
+    #Product.find_by(id: params[:id]).destroy
+
+    flash[:success] = "User Deleted"
+
+    redirect_to selling_product_path
   end
 
   private

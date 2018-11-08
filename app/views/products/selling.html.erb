@@ -1,0 +1,33 @@
+<h2>Items You Are Selling</h2>
+
+<div>
+  <ul>
+    <table style="width:100%">
+      <tr>
+        <th>Item</th>
+        <th>Price</th> 
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+
+      <% @products.each do |item| %>
+
+        <% if item.user_id == @user.id %>
+              <tr>
+                <td><%= item.title %></td>
+                <td><%= item.price %></td>
+                <td> 
+                  <%= link_to "Edit Item", edit_listed_product_path(item.id), method: :get %> 
+                </td>
+                <td>
+                  <%= link_to "Unlist Item", delete_listed_product_path(item.id), data: { confirm: "You sure? "}, method: :delete %>
+                </td>
+              </tr>
+        <% end %>
+      <% end %>
+
+    </table>
+  </ul>
+</div>
+
+

@@ -1,8 +1,6 @@
 <h1>Shopping Cart</h1>
 
 <div>
-  <h3>Products in cart </h3>
-
   <ul>
     <table style="width:100%">
       <tr>
@@ -56,7 +54,11 @@
             </b>
           </td>
 
-          <td> <b> Checkout </b> </td>
+          <td> 
+            <b> 
+              <%= link_to "Checkout", user_checkout_path, method: :get %> 
+            </b> 
+          </td>
       </tr>
     </table>
   </ul>

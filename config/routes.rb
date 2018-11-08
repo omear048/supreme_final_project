@@ -6,10 +6,17 @@ Rails.application.routes.draw do
 
   get 'sessions/new'
 
+  match '/products/selling', to: 'products#selling', via: 'get', as: 'selling_product'
+  match '/products/selling/:product_id', to: 'products#destroy', via: 'delete', as: 'delete_listed_product'
+  match '/products/selling/:product_id', to: 'products#edit', via: 'get', as: 'edit_listed_product'
+  match '/products/selling/:product_id', to: 'products#update', via: 'post', as: 'update_listed_product'
+
+
   match '/products_users/:product_id', to:'products_users#destroy', via: 'delete', as: 'delete_products_users'
   match '/products_users',      to:'products_users#create',     via: 'post'
 
   match '/users_cart',    to: 'products_users#cart',  via: 'get'
+  match '/users_cart/checkout', to: 'products_users#checkout', via: 'get', as: 'user_checkout'
 
   resources :products
   root 'static_pages#home'

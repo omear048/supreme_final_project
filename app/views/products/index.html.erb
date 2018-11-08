@@ -1,29 +1,42 @@
-<h1> Shopping </h1>
-
-
-<div>
+<div class="container">
+  <h3 class="h3"> Products For Sale </h3>
+    
   <% if @user.products.any? %>
-    <h3>Products (<%= @user.products.count %>)</h3> 
-
-    <ul>
-      <% @products.each do |item| %>  
-        <li>
-          <h4> <%= item.title %> </h4>
-          <p><%= number_to_currency(item.price) %></p>
-          <p> 
-
-            <%= form_for(@add_product) do |f| %>
-              <%= f.hidden_field :product_id, value: item.id %>
-              <%= f.hidden_field :user_id, value: @user.id %>
-              <%= f.submit "Add To Cart" %>
-            <% end %>
-
-          </p>
-        </li>
-      <% end %>
-    </ul>
+    <div class="row">
+      <% @products.each do |item| %>
+        <div class="col-md-3 col-sm-6">
+          <div class="product-grid">
+            <div class="product-image">
+              <a href="#">
+                <img class="pic-1" src= "<%= item.picture_url %>" >
+              </a>
+            </div>
+            <div class="product-content">
+              <h3 class="title"><a href="#"><%= item.title %> </a></h3>
+              <div class="price">
+                <%=  number_to_currency(item.price) %>
+              </div>
+              <p>
+                <%= form_for(@add_product) do |f| %>
+                  <%= f.hidden_field :product_id, value: item.id %>
+                  <%= f.hidden_field :user_id, value: @user.id %>
+                  <%= f.submit "Add To Cart" %>
+                <% end %>
+              </p>
+            </div>
+          </div>
+        </div>  
+      <% end %>  
+    </div>
   <% end %>
 </div>
+
+
+
+
+
+
+
 
 
 

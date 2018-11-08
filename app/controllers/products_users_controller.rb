@@ -3,6 +3,7 @@ class ProductsUsersController < ApplicationController
  
 
 
+  #Adding product to shopping cart (On Shopping Page)
   def create
     #@none = current_user.products.build(products_user_params)
     #@none = Product.new(products_user_params)
@@ -15,14 +16,18 @@ class ProductsUsersController < ApplicationController
     end
   end
 
+  #Users shopping cart
   def cart
     @user = current_user
     @items = ProductsUser.all
     @products = Product.all
-    
   end
 
-  #Delete
+  def checkout
+
+  end
+
+  #Delete item from shopping cart
   def destroy
     #binding.pry
     ProductsUser.find_by(product_id: params[:product_id]).destroy
