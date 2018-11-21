@@ -1,7 +1,15 @@
 <div class="container">
   <h3 class="h3"> Products For Sale </h3>
     
-  <% if @user.products.any? %>
+  <%= form_tag products_path, method: :get do %>
+    <p>
+      Search <%= text_field_tag :product_search, params[:product_search], placeholder: "Search Items" %>
+      <%= submit_tag 'Search', :name => nil %>
+    <p>
+  <% end %>
+
+
+  <% if @products.any? %>
     <div class="row">
       <% @products.each do |item| %>
         <div class="col-md-3 col-sm-6">

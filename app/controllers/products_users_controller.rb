@@ -24,7 +24,9 @@ class ProductsUsersController < ApplicationController
   end
 
   def checkout
-
+    @user = current_user
+    @items = ProductsUser.all
+    @products = Product.all
   end
 
   #Delete item from shopping cart

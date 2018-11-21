@@ -1,0 +1,73 @@
+<h1> Checkout </h1>
+
+#products => 
+  - sold = 'y'
+#purchases => 
+  - user_id 
+#products_purchases =>
+  - product_id
+  - user_id
+  - purchase_id
+
+<p>
+  <b>Shipping Address:</b>
+  <br>
+  <%= @address.name  %>
+  <br>
+  <%= @address.address %>
+  <br>
+  <%= @address.city %>
+  <br>
+  <%= @address.state %>
+  <br>
+  <%= @address.zip %>
+  <br>
+  <a href= <%= new_address_path %> > Update Address</a>
+  <br>
+    <%= form_for :anything, url: products_buy_path, html: { method: :post } do |f| %>
+        <%= f.hidden_field :user_id, :value => current_user.id %>
+      <div class="actions">
+        <%= f.submit "Purchase" %>
+      </div>
+
+    <% end %>
+</p>
+
+<%= form_tag charges_path do %>
+  <article>
+    <% if flash[:error].present? %>
+      <div id="error_explanation">
+        <p><%= flash[:error] %></p>
+      </div>
+    <% end %>
+    <label class="amount">
+
+          <% total = 0 %>
+          <% @items.each do |item| %>
+            <% if item.user_id == @user.id %>
+              <% @products.each do |product_match|%>
+                <% if product_match.id == item.product_id %>
+                  <% price = product_match.price %>
+                  <% if product_match.price.nil? %>
+                    <% price = 0 %>
+                  <% end %>
+                  <% total += price %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+
+      <span>Amount: <%= total %> 
+
+
+
+      </span>
+    </label>
+  </article>
+
+  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+          data-description="Product purchase"
+          data-amount= <%= total %>
+          data-locale="auto"></script>
+<% end %>

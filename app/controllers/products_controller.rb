@@ -19,15 +19,22 @@ class ProductsController < ApplicationController
   # Show a collection/many of products (Shopping Page)
   def index
     @user = current_user  
-    #@product = Product.new(user: @user)
-    #@product = current_user.products.build(user: )
-    @products = Product.all
+    @products = Product.where(sold: false)
+
+    if params[:product_search]
+      @products = Product.search(params[:product_search])
+    end
+
+    #binding.pry
 
     @add_product = ProductsUser.new
   end
 
+
   #List a new product (List Item Page)
   def create
+    binding.pry
+
     @product = current_user.products.build(product_params)
     if @product.save 
       redirect_to root_url
@@ -46,7 +53,6 @@ class ProductsController < ApplicationController
   def update
     @product = Product.find(params[:id])
 
-
     if @product.update_attributes(product_params)
       flash[:success] = "Profile updated"
       redirect_to selling_product_path
@@ -56,16 +62,10 @@ class ProductsController < ApplicationController
     end
   end
 
-  def cart
-  end
-
   #Items that a user has for sale 
   def selling
     @user = current_user
     @products = Product.all
-
-
-
   end
 
   #Removing a product that a user listed 
@@ -74,10 +74,52 @@ class ProductsController < ApplicationController
 
     #Product.find_by(id: params[:id]).destroy
 
-    flash[:success] = "User Deleted"
+    flash[:success] = "Product Deleted"
 
     redirect_to selling_product_path
   end
+
+ 
+
+  def purchase
+
+    @user = current_user
+    @products = Product.all
+
+    @cart = ProductsUser.where(user_id: @user.id)
+
+    #binding.pry 
+
+    @order = Order.new(user_id: @user.id)
+    @order.save
+
+    @cart.each do |cart_product|
+      #binding.pry
+      item = ItemsOrder.new(order_id: @order.id, product_id: cart_product.product_id)
+      item.save
+      @products.each do |product|
+        if product.id == cart_product.product_id
+          Product.find_by(id: product.id).update_attributes!(sold: 1)
+          #product = Product.find_by(id: @products.id).update_attributes!(sold: 1)
+          #ProductsUser.find_by(product_id: params[:product_id]).destroy
+        end
+
+        #binding.pry 
+
+        ProductsUser.where(user_id: @user.id).destroy_all
+        Product
+      end 
+    end
+
+    redirect_to root_path
+  end
+
+  def sold
+    @products = Product.where(user_id: current_user.id).where(sold: true)
+    #binding.pry
+
+  end
+
 
   private
 

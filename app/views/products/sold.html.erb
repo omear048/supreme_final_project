@@ -1,0 +1,18 @@
+<h1> Items Sold </h1>
+
+<div>
+  <table style="width:100%">
+    <tr>
+      <th>Product Title</th>
+      <th>Price</th> 
+      <th>Date of Sale</th>
+    </tr>
+     <% @products.each do |item| %>
+      <tr>
+        <td> <%= item.title %> </td>
+        <td> <%= item.price %> </td>
+        <td> <%= item.updated_at %> </td>
+      </tr>
+    <% end %>
+  </table>
+</div>

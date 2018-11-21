@@ -1,0 +1,65 @@
+<h1> Checkout </h1>
+
+<div>
+  <ul>
+    <table style="width:100%">
+      <tr>
+        <th>Item</th>
+        <th>Price</th> 
+        <th>Removal</th>
+      </tr>
+
+      <% @items.each do |item| %>
+
+        <% if item.user_id == @user.id %>
+
+          <% @products.each do |product_match|%>
+                
+            <% if product_match.id == item.product_id %>
+              <tr>
+                <td><%= product_match.title %></td>
+                <td><%= product_match.price %></td>
+                <td>
+
+
+                  <%= link_to "Remove from Cart", delete_products_users_path(item.product_id), data: { confirm: "You sure? "}, method: :delete %>
+
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <tr> 
+        <td> <b> Total </b> </td>
+
+          <% total = 0 %>
+          <% @items.each do |item| %>
+            <% if item.user_id == @user.id %>
+              <% @products.each do |product_match|%>
+                <% if product_match.id == item.product_id %>
+                  <% price = product_match.price %>
+                  <% if product_match.price.nil? %>
+                    <% price = 0 %>
+                  <% end %>
+                  <% total += price %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+          <td> 
+            <b>
+              <%= total %>
+            </b>
+          </td>
+
+          <td> 
+            <b> 
+              <%= link_to "Checkout", user_checkout_path, method: :get %> 
+            </b> 
+          </td>
+      </tr>
+    </table>
+  </ul>
+</div>

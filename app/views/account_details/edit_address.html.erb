@@ -1,0 +1,49 @@
+<div>
+  <h2>Your Address</h2>
+
+    <%= form_for @address, url: edit_address_path, html: { method: :post } do |f| %>
+
+      <div class ="field">
+        <%= f.label :name %><br/>
+        <%= f.text_area :name %><br/>
+      <div>
+
+      <div class ="field">
+        <%= f.label :address %><br/>
+        <%= f.text_area :address %><br/>
+      <div>
+
+      <div class ="field">
+        <%= f.label :city %><br/>
+        <%= f.text_area :city %><br/>
+      <div>
+
+      <div class ="field">
+        <%= f.label :state %><br/>
+        <%= f.text_area :state %><br/>
+      <div>
+
+      <div class ="field">
+        <%= f.label :zip %><br/>
+        <%= f.text_area :zip %><br/>
+      <div>
+
+      <div class ="field">
+        <%= f.label :phone %><br/>
+        <%= f.text_area :phone %><br/>
+      <div>
+
+        <%= f.hidden_field :user_id, :value => current_user.id %>
+
+      <div class="actions">
+        <%= f.submit "Update Address" %>
+      </div>
+
+    <% end %>
+
+</div>
+
+
+
+
+

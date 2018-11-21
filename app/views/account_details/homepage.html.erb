@@ -1,0 +1,9 @@
+<h3>Manage your account information below</h3>
+
+
+<div>
+  <li> <%= link_to "Manage Address", new_address_path %> </li>
+  <li> <%= link_to "Purchase History", account_details_orders_path(current_user.id) %> </li>
+  <li> <%= link_to "Items Sold", sold_path %> </li>
+</div>
+      
