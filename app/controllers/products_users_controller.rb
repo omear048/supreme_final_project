@@ -1,42 +1,35 @@
-#Command K = Gets rid of left Menu and Command B brings it back
 class ProductsUsersController < ApplicationController
- 
-
-
-  #Adding product to shopping cart (On Shopping Page)
-  def create
-    #@none = current_user.products.build(products_user_params)
-    #@none = Product.new(products_user_params)
-
+  def create 
     @add_product = ProductsUser.new(products_user_params)
     if @add_product.save
-      redirect_to root_url
-    else
-      nil
+      flash[:success] = "Product added to cart"
+      redirect_to products_path
+    elsif 
+      flash[:fail] = "Product already in cart"
+      redirect_to products_path
     end
   end
 
-  #Users shopping cart
-  def cart
+  def cart 
     @user = current_user
     @items = ProductsUser.all
     @products = Product.all
   end
 
-  def checkout
+  def checkout 
     @user = current_user
     @items = ProductsUser.all
-    @products = Product.all
+    @products = Product.all  
+    @address = UsersAddress.find_by user_id: current_user.id 
   end
 
-  #Delete item from shopping cart
-  def destroy
-    #binding.pry
+  def destroy 
     ProductsUser.find_by(product_id: params[:product_id]).destroy
-
-    flash[:success] = "User Deleted"
-
+    flash[:success] = "Product removed from cart"
     redirect_to users_cart_path
+  end
+
+  def success 
   end
 
   private
@@ -44,6 +37,4 @@ class ProductsUsersController < ApplicationController
     def products_user_params
       params.require(:products_user).permit(:user_id, :product_id)
     end
-
-
 end

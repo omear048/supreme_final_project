@@ -1,6 +1,9 @@
 <h1>Shopping Cart</h1>
 
 <div>
+  <% if flash[:success] %>
+    <div class="success-flash-message"><%= flash[:success] %></div>
+  <% end %>
   <ul>
     <table style="width:100%">
       <tr>
@@ -8,32 +11,23 @@
         <th>Price</th> 
         <th>Removal</th>
       </tr>
-
       <% @items.each do |item| %>
-
         <% if item.user_id == @user.id %>
-
-          <% @products.each do |product_match|%>
-                
+          <% @products.each do |product_match|%>  
             <% if product_match.id == item.product_id %>
               <tr>
                 <td><%= product_match.title %></td>
-                <td><%= product_match.price %></td>
+                <td><%= number_to_currency(product_match.price, :unit => "$") %></td>
                 <td>
-
-
                   <%= link_to "Remove from Cart", delete_products_users_path(item.product_id), data: { confirm: "You sure? "}, method: :delete %>
-
                 </td>
               </tr>
             <% end %>
           <% end %>
         <% end %>
       <% end %>
-
       <tr> 
         <td> <b> Total </b> </td>
-
           <% total = 0 %>
           <% @items.each do |item| %>
             <% if item.user_id == @user.id %>
@@ -50,13 +44,12 @@
           <% end %>
           <td> 
             <b>
-              <%= total %>
+              <%= number_to_currency(total, :unit => "$") %>
             </b>
           </td>
-
           <td> 
             <b> 
-              <%= link_to "Checkout", new_charges_path, method: :get %> 
+              <%= link_to "Checkout", user_checkout_path, method: :get %> 
             </b> 
           </td>
       </tr>

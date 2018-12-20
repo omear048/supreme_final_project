@@ -5,10 +5,13 @@ ruby '2.5.0'
 
 #Custom added gems
 gem 'devise'
+gem 'erubis'
 gem 'bootstrap-sass', '2.3.2.0'# HTML & CSS Page Design  
 gem 'sprockets', '3.7.2' #HTML & CSS Page Design
 gem 'mailcatcher' #Used for testing the sending of emails on a local server
 gem 'stripe' #Payment processing
+gem 'faker'
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'
@@ -50,6 +53,9 @@ gem 'jquery-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem "database_cleaner"
+  gem 'rspec-rails', '3.6.0'
+  gem 'factory_girl_rails'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry'
 end
@@ -65,10 +71,11 @@ end
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 2.15'
+  gem 'capybara'
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
+
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -1,65 +1,57 @@
 <h1> Checkout </h1>
 
-<div>
-  <ul>
-    <table style="width:100%">
-      <tr>
-        <th>Item</th>
-        <th>Price</th> 
-        <th>Removal</th>
-      </tr>
+<% cookies[:previous_route] = user_checkout_path %>
 
+<% if flash[:success] %>
+  <div class="success-flash-message"><%= flash[:success] %></div>
+<% end %>
+
+<p>
+  <% if @address == nil  %>
+    Please add your shipping information to checkout
+    <br>
+    <a href= <%= new_address_path %> > Update Shipping Information </a>
+    <% %>
+  <% else %>
+    <b>Shipping Address:</b>
+    <br>
+    <%= @address.name  %>
+    <br>
+    <%= @address.address %>
+    <br>
+    <%= @address.city %>
+    <br>
+    <%= @address.state %>
+    <br>
+    <%= @address.zip %>
+    <br>
+    <a href= <%= new_address_path %> > Update Shipping Address </a>
+    <br>
+    <br>
+    <label class="amount">
+      <% total = 0 %>
       <% @items.each do |item| %>
-
         <% if item.user_id == @user.id %>
-
           <% @products.each do |product_match|%>
-                
             <% if product_match.id == item.product_id %>
-              <tr>
-                <td><%= product_match.title %></td>
-                <td><%= product_match.price %></td>
-                <td>
-
-
-                  <%= link_to "Remove from Cart", delete_products_users_path(item.product_id), data: { confirm: "You sure? "}, method: :delete %>
-
-                </td>
-              </tr>
+              <% price = product_match.price %>
+              <% if product_match.price.nil? %>
+                <% price = 0 %>
+              <% end %>
+              <% total += price %>
             <% end %>
           <% end %>
         <% end %>
       <% end %>
-
-      <tr> 
-        <td> <b> Total </b> </td>
-
-          <% total = 0 %>
-          <% @items.each do |item| %>
-            <% if item.user_id == @user.id %>
-              <% @products.each do |product_match|%>
-                <% if product_match.id == item.product_id %>
-                  <% price = product_match.price %>
-                  <% if product_match.price.nil? %>
-                    <% price = 0 %>
-                  <% end %>
-                  <% total += price %>
-                <% end %>
-              <% end %>
-            <% end %>
-          <% end %>
-          <td> 
-            <b>
-              <%= total %>
-            </b>
-          </td>
-
-          <td> 
-            <b> 
-              <%= link_to "Checkout", user_checkout_path, method: :get %> 
-            </b> 
-          </td>
-      </tr>
-    </table>
-  </ul>
-</div>
+      <span>
+        Checkout Total: <%= number_to_currency(total, :unit => "$") %> 
+      </span>
+    </label>  
+      <%= form_for :anything, url: products_buy_path, html: { method: :post } do |f| %>
+        <%= f.hidden_field :user_id, :value => current_user.id %>
+      <div class="actions">
+        <%= f.submit "Purchase" %>
+      </div>
+    <% end %>
+  <% end %>
+</p>

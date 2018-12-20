@@ -1,7 +1,15 @@
-<h3>Manage your account information below</h3>
+<h3>Account Management</h3>
 
+<% if flash[:success] %>
+  <div class="success">
+    <font color="green">
+      <%= flash[:success] %>
+    </font>
+  </div>
+<% end %>
 
 <div>
+  <% cookies[:previous_route] = account_details_path %>
   <li> <%= link_to "Manage Address", new_address_path %> </li>
   <li> <%= link_to "Purchase History", account_details_orders_path(current_user.id) %> </li>
   <li> <%= link_to "Items Sold", sold_path %> </li>

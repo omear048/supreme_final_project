@@ -1,6 +1,8 @@
 <h1> Edit Item </h1>
 
 <%= form_for(@product) do |f| %>
+  <%= render 'shared/product_error_messages' %> 
+ 
   <div class ="field">
     <%= f.label :title %><br/>
     <%= f.text_area :title %><br/>

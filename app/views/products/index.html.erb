@@ -1,5 +1,5 @@
 <div class="container">
-  <h3 class="h3"> Products For Sale </h3>
+  <h1> Products For Sale </h1>
     
   <%= form_tag products_path, method: :get do %>
     <p>
@@ -8,11 +8,16 @@
     <p>
   <% end %>
 
+  <% if flash[:fail] %>
+    <div class="fail-flash-message"><%= flash[:fail] %></div>
+  <% elsif flash[:success] %>
+    <div class="success-flash-message"><%= flash[:success] %></div>
+  <% end %>
 
   <% if @products.any? %>
     <div class="row">
       <% @products.each do |item| %>
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3 col-sm-6" id="product-id-<%= item.id %>">
           <div class="product-grid">
             <div class="product-image">
               <a href="#">
@@ -24,19 +29,25 @@
               <div class="price">
                 <%=  number_to_currency(item.price) %>
               </div>
-              <p>
-                <%= form_for(@add_product) do |f| %>
-                  <%= f.hidden_field :product_id, value: item.id %>
-                  <%= f.hidden_field :user_id, value: @user.id %>
-                  <%= f.submit "Add To Cart" %>
-                <% end %>
-              </p>
+              <% if @user == nil %>
+                <%= button_to "Add To Cart", new_user_session_path, id: "add_#{item.id}_to_cart" %>
+              <% else %>
+                <p>
+                  <%= form_for(@add_product) do |f| %>
+                    <%= f.hidden_field :product_id, value: item.id, id: "data-product-id-#{@add_product.id}" %>
+                    <%= f.hidden_field :user_id, value: @user.id %>
+                    <%= f.submit "Add To Cart", id: "add_#{item.id}_to_cart"%>
+                  <% end %>
+                </p>
+              <% end %>
             </div>
           </div>
         </div>  
       <% end %>  
     </div>
+
   <% end %>
+
 </div>
 
 

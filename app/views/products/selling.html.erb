@@ -1,4 +1,11 @@
-<h2>Items You Are Selling</h2>
+<h1>Items You Are Selling</h1>
+
+<div class=success-flash-message>
+  <% if flash[:success] %>
+    <div class="success"><%= flash[:success] %></div>
+    <br>
+  <% end %>
+</div>
 
 <div>
   <ul>
@@ -9,23 +16,20 @@
         <th>Edit</th>
         <th>Delete</th>
       </tr>
-
       <% @products.each do |item| %>
-
         <% if item.user_id == @user.id && item.sold == false %>
-              <tr>
-                <td><%= item.title %></td>
-                <td><%= item.price %></td>
-                <td> 
-                  <%= link_to "Edit Item", edit_listed_product_path(item.id), method: :get %> 
-                </td>
-                <td>
-                  <%= link_to "Unlist Item", delete_listed_product_path(item.id), data: { confirm: "You sure? "}, method: :delete %>
-                </td>
-              </tr>
+          <tr>
+            <td><%= item.title %></td>
+            <td><%= item.price %></td>
+            <td> 
+              <%= link_to "Edit Item", edit_listed_product_path(item.id), method: :get %> 
+            </td>
+            <td>
+              <%= link_to "Unlist Item", delete_listed_product_path(item.id), data: { confirm: "You sure? "}, method: :delete %>
+            </td>
+          </tr>
         <% end %>
       <% end %>
-
     </table>
   </ul>
 </div>
