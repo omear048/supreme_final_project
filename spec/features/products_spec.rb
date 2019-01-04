@@ -1,12 +1,7 @@
-#Using the RSpec let function, which creates a variable corresponding to its argument (Pg. 138) 
-#The before block runs the code inside the block before each example—in this case, creating a new @user instance vari- able using User.new and a valid initialization hash. 
-
 require 'spec_helper'
-#Capybara is used for the feature user testing
-
 
 describe "Products pages" do
-  subject { page }  #eliminates the repitition on the page variable 
+  subject { page } 
 
   before do 
     @user1 = FactoryGirl.create(:user) 
@@ -22,15 +17,13 @@ describe "Products pages" do
     @user2_product3 = FactoryGirl.create(:product, user_id: @user2.id, title: "Supreme Box Logo T-Shirt", price: 450, picture_url: 'https://stockx.imgix.net/products/streetwear/Supreme-Box-Logo-Hooded-Sweatshirt-Black.jpg?fit=fill&bg=FFFFFF&w=700&h=500&auto=format,compress&q=90&dpr=2&trim=color&updated_at=1538082009') 
     @user2_product4_sold = FactoryGirl.create(:product, sold: true, user: @user2, title: "Supreme Box Logo T-Shirt", price: 450, picture_url: 'https://stockx.imgix.net/products/streetwear/Supreme-Box-Logo-Hooded-Sweatshirt-Black.jpg?fit=fill&bg=FFFFFF&w=700&h=500&auto=format,compress&q=90&dpr=2&trim=color&updated_at=1538082009') 
 
-
     @user3 = FactoryGirl.create(:user) 
     @user3_product1 = FactoryGirl.create(:product, user_id: @user3.id, title: "Supreme Box Logo Hat", price: 200, picture_url: 'https://stockx.imgix.net/products/streetwear/Supreme-Box-Logo-Hooded-Sweatshirt-Black.jpg?fit=fill&bg=FFFFFF&w=700&h=500&auto=format,compress&q=90&dpr=2&trim=color&updated_at=1538082009') 
     @user3_product2 = FactoryGirl.create(:product, user_id: @user3.id, title: "Supreme Box Logo Crewneck", price: 375, picture_url: 'https://stockx.imgix.net/products/streetwear/Supreme-Box-Logo-Hooded-Sweatshirt-Black.jpg?fit=fill&bg=FFFFFF&w=700&h=500&auto=format,compress&q=90&dpr=2&trim=color&updated_at=1538082009') 
     @user3_product3 = FactoryGirl.create(:product, user_id: @user3.id, title: "Supreme Box Logo T-Shirt", price: 375, picture_url: 'https://stockx.imgix.net/products/streetwear/Supreme-Box-Logo-Hooded-Sweatshirt-Black.jpg?fit=fill&bg=FFFFFF&w=700&h=500&auto=format,compress&q=90&dpr=2&trim=color&updated_at=1538082009') 
     @user3_product4_sold = FactoryGirl.create(:product, sold: true, user: @user3, title: "Supreme Box Logo T-Shirt", price: 450, picture_url: 'https://stockx.imgix.net/products/streetwear/Supreme-Box-Logo-Hooded-Sweatshirt-Black.jpg?fit=fill&bg=FFFFFF&w=700&h=500&auto=format,compress&q=90&dpr=2&trim=color&updated_at=1538082009') 
 
-
-    @user4 = FactoryGirl.create(:user)   #We can create a User factory in the tests using the let command and the FactoryGirl method supplied by Factory Girl.
+    @user4 = FactoryGirl.create(:user)   
     @user4_product1 = FactoryGirl.create(:product, user_id: @user4.id, title: "Supreme Box Logo Hat", price: 200, picture_url: 'https://stockx.imgix.net/products/streetwear/Supreme-Box-Logo-Hooded-Sweatshirt-Black.jpg?fit=fill&bg=FFFFFF&w=700&h=500&auto=format,compress&q=90&dpr=2&trim=color&updated_at=1538082009') 
     @user4_product2 = FactoryGirl.create(:product, user_id: @user4.id, title: "Supreme Box Logo Crewneck", price: 375, picture_url: 'https://stockx.imgix.net/products/streetwear/Supreme-Box-Logo-Hooded-Sweatshirt-Black.jpg?fit=fill&bg=FFFFFF&w=700&h=500&auto=format,compress&q=90&dpr=2&trim=color&updated_at=1538082009') 
     @user4_product3 = FactoryGirl.create(:product, user_id: @user4.id, title: "Louis Vuitton T-Shirt", price: 375, picture_url: 'https://stockx.imgix.net/products/streetwear/Supreme-Box-Logo-Hooded-Sweatshirt-Black.jpg?fit=fill&bg=FFFFFF&w=700&h=500&auto=format,compress&q=90&dpr=2&trim=color&updated_at=1538082009') 
@@ -47,7 +40,7 @@ describe "Products pages" do
       it { should have_content('Title') }
       it { should have_content('Price') }
       it { should have_content('Picture url') }
-      it { should have_button("List Product") }
+      it { should have_button('List Product') }
     end
 
     describe "product creation" do 
@@ -79,7 +72,7 @@ describe "Products pages" do
 
         it "should create a new product with correct data" do
           expect { click_button submit }.to change(Product, :count).by(1)
-          last_product = Product.last
+          last_product = Product.first
           expect(last_product.title).to eq 'Supreme Box Logo Hoodie' 
           expect(last_product.price).to eq 1750
           expect(last_product.picture_url).to eq "https://stockx.imgix.net/products/streetwear/Supreme-Compact-Logo-Hoodie-Black.jpg?fit=fill&bg=FFFFFF&w=358&h=255&auto=format,compress&trim=color&q=90&dpr=2&updated_at=1539713149"
@@ -115,7 +108,7 @@ describe "Products pages" do
         it 'should list all products the user has for sale' do
           listed_products.each do |item|
             expect(page).to have_content(item.title)
-            should have_content(item.price)
+            should have_content("#{ActionController::Base.helpers.number_to_currency(item.price)}")
             should have_link('Edit Item', href: edit_listed_product_path(item.id))
             should have_link('Unlist Item', href: delete_listed_product_path(item.id))
           end  

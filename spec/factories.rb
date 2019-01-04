@@ -1,9 +1,7 @@
 FactoryGirl.define do
   factory :user do 
-    name { "Person #{User.count + 1}" }
-    # sequence(:name) { |n| "Person #{n}"}
-    # sequence(:email){ |n| "Person_#{n}@gmail.com"}
-    email { "Person_#{User.count + 1}@gmail.com"}
+    name {"Person #{User.count + 1}"}
+    email {"Person_#{User.count + 1}@gmail.com"}
     password "password"
     password_confirmation "password"
   end
@@ -31,5 +29,4 @@ FactoryGirl.define do
 
   factory :items_order do 
   end
-
 end

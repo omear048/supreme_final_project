@@ -8,12 +8,28 @@
       <tr>
         <th>Product Title</th>
         <th>Price</th> 
+        <th>Shipping Address</th>
         <th>Date of Sale</th>
       </tr>
-       <% @products.each do |item| %>
+      <% @products.each do |item| %>
         <tr>
           <td> <%= item.title %> </td>
           <td> <%= item.price %> </td>
+          <td>
+            <% @users_addresses.each do |address| %>
+              <% if item.users_address_id == address.id %>
+                <%= address.name %> 
+                <br>
+                <%= address.address %>
+                <br>
+                <%= address.city %>
+                <br>
+                <%= address.state %>
+                <br>
+                <%= address.zip %>
+              <% end %>
+            <% end %>
+          </td>
           <td> <%= item.updated_at %> </td>
         </tr>
       <% end %>

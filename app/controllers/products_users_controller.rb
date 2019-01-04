@@ -1,7 +1,7 @@
 class ProductsUsersController < ApplicationController
   def create 
-    @add_product = ProductsUser.new(products_user_params)
-    if @add_product.save
+    add_product = ProductsUser.new(products_user_params)
+    if add_product.save
       flash[:success] = "Product added to cart"
       redirect_to products_path
     elsif 

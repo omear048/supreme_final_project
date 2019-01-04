@@ -3,9 +3,9 @@
     
   <%= form_tag products_path, method: :get do %>
     <p>
-      Search <%= text_field_tag :product_search, params[:product_search], placeholder: "Search Items" %>
-      <%= submit_tag 'Search', :name => nil %>
-    <p>
+    Search <%= text_field_tag :product_search, params[:product_search], placeholder: "Search Items" %>
+    <%= submit_tag 'Search', :name => nil %>
+    </p>
   <% end %>
 
   <% if flash[:fail] %>
@@ -33,11 +33,11 @@
                 <%= button_to "Add To Cart", new_user_session_path, id: "add_#{item.id}_to_cart" %>
               <% else %>
                 <p>
-                  <%= form_for(@add_product) do |f| %>
-                    <%= f.hidden_field :product_id, value: item.id, id: "data-product-id-#{@add_product.id}" %>
-                    <%= f.hidden_field :user_id, value: @user.id %>
-                    <%= f.submit "Add To Cart", id: "add_#{item.id}_to_cart"%>
-                  <% end %>
+                <%= form_for(@add_product) do |f| %>
+                  <%= f.hidden_field :product_id, value: item.id, id: "data-product-id-#{@add_product.id}" %>
+                  <%= f.hidden_field :user_id, value: @user.id %>
+                  <%= f.submit "Add To Cart", id: "add_#{item.id}_to_cart"%>
+                <% end %>
                 </p>
               <% end %>
             </div>
@@ -45,22 +45,5 @@
         </div>  
       <% end %>  
     </div>
-
   <% end %>
-
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

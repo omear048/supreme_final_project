@@ -20,7 +20,7 @@
         <% if item.user_id == @user.id && item.sold == false %>
           <tr>
             <td><%= item.title %></td>
-            <td><%= item.price %></td>
+            <td><%= number_to_currency(item.price) %></td>
             <td> 
               <%= link_to "Edit Item", edit_listed_product_path(item.id), method: :get %> 
             </td>
@@ -33,5 +33,3 @@
     </table>
   </ul>
 </div>
-
-

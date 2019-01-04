@@ -5,13 +5,14 @@ class ProductsController < ApplicationController
     @product = Product.new(user: current_user) 
   end
 
-  def create #tested
+
+  def create 
     @product = Product.new(product_params)
     if @product.save 
       redirect_to products_path
       flash[:success] = "*Your product has been listed"
     else
-      render 'new'
+      render 'new'  # Instance variable must be used since we're using render vs. rerunning the controller action when redirect is used
     end
   end
 
@@ -34,7 +35,6 @@ class ProductsController < ApplicationController
       flash[:success] = "*Your product listing has been updated"
       redirect_to selling_product_path
     else
-      #redirect_to edit_listed_product_path(@product.id)
       render 'edit'
     end
   end
@@ -52,6 +52,7 @@ class ProductsController < ApplicationController
 
   def purchase 
     @user = current_user
+    @users_address = UsersAddress.where(user_id: @user.id)
     @products = Product.all
     @cart = ProductsUser.where(user_id: @user.id)
     @order = Order.new(user_id: @user.id)
@@ -62,7 +63,7 @@ class ProductsController < ApplicationController
       item.save
       @products.each do |product|
         if product.id == cart_product.product_id
-          Product.find_by(id: product.id).update_attributes!(sold: 1)
+          Product.find_by(id: product.id).update_attributes!(sold: 1, users_address_id: @users_address.ids[0])
         end
         ProductsUser.where(user_id: @user.id).destroy_all
       end 
@@ -72,16 +73,7 @@ class ProductsController < ApplicationController
 
   private
 
-    def product_params #Page 361 - We want to require the params hash to have a :product attribute, and we want to permit the title, price, and picture_url. This code returns a version of the params hash with only the permitted attributes (while raising an error if the :user attribute is missing).
+    def product_params 
       params.require(:product).permit(:user_id, :title, :price, :picture_url)
     end
 end
-
-
-
-
-
-
-
-
-

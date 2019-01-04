@@ -1,6 +1,5 @@
 require "spec_helper"
 
-
 describe "Products users pages" do
   subject { page }  #eliminates the repitition on the page variable 
 
@@ -169,9 +168,7 @@ describe "Products users pages" do
             should have_no_content("add_#{@user2_product3.id}_to_cart") 
           end
         end
-
       end
-
     end
   end 
 end

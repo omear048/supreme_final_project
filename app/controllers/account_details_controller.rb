@@ -16,7 +16,7 @@ class AccountDetailsController < ApplicationController
   end
 
   def create
-   @address = UsersAddress.new(address_params)
+    @address = UsersAddress.new(address_params)
     if @address.save 
       flash[:success] = "* Address has successfully been added"
       redirect_to cookies[:previous_route]
@@ -26,7 +26,6 @@ class AccountDetailsController < ApplicationController
   end
 
   def update
-    #session[:return_to] ||= request.referer
     @address = UsersAddress.find_by user_id: current_user.id
 
     if @address.update_attributes(address_params)
@@ -49,11 +48,12 @@ class AccountDetailsController < ApplicationController
 
   def sold 
     @products = Product.where(user_id: current_user.id).where(sold: true)
+    @users_addresses = UsersAddress.all
   end
 
   private
 
-    def address_params #Page 361 - We want to require the params hash to have a :product attribute, and we want to permit the title, price, and picture_url. This code returns a version of the params hash with only the permitted attributes (while raising an error if the :user attribute is missing).
+    def address_params 
       params.require(:users_address).permit(:name, :address, :city, :state, :zip, :phone, :user_id)
     end
 end

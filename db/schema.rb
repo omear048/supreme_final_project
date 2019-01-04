@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_12_202237) do
+ActiveRecord::Schema.define(version: 2019_01_03_025224) do
 
   create_table "items_orders", force: :cascade do |t|
     t.integer "product_id"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 2018_11_12_202237) do
     t.boolean "sold", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "users_address_id"
   end
 
   create_table "products_users", force: :cascade do |t|

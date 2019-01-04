@@ -28,32 +28,31 @@
       <% end %>
       <tr> 
         <td> <b> Total </b> </td>
-          <% total = 0 %>
-          <% @items.each do |item| %>
-            <% if item.user_id == @user.id %>
-              <% @products.each do |product_match|%>
-                <% if product_match.id == item.product_id %>
-                  <% price = product_match.price %>
-                  <% if product_match.price.nil? %>
-                    <% price = 0 %>
-                  <% end %>
-                  <% total += price %>
+        <% total = 0 %>
+        <% @items.each do |item| %>
+          <% if item.user_id == @user.id %>
+            <% @products.each do |product_match|%>
+              <% if product_match.id == item.product_id %>
+                <% price = product_match.price %>
+                <% if product_match.price.nil? %>
+                  <% price = 0 %>
                 <% end %>
+                <% total += price %>
               <% end %>
             <% end %>
           <% end %>
-          <td> 
-            <b>
-              <%= number_to_currency(total, :unit => "$") %>
-            </b>
-          </td>
-          <td> 
-            <b> 
-              <%= link_to "Checkout", user_checkout_path, method: :get %> 
-            </b> 
-          </td>
+        <% end %>
+        <td> 
+          <b>
+            <%= number_to_currency(total, :unit => "$") %>
+          </b>
+        </td>
+        <td> 
+          <b> 
+            <%= link_to "Checkout", user_checkout_path, method: :get %> 
+          </b> 
+        </td>
       </tr>
     </table>
   </ul>
 </div>
-

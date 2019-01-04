@@ -3,12 +3,14 @@ require 'spec_helper'
 describe UsersAddress do
   before do
     @user = User.new(name: "Example User", email: "user@example.com",
-                      password: "foobar", password_confirmation: "foobar").save
+                     password: "foobar", password_confirmation: "foobar").save
 
-    @address = UsersAddress.new(user_id: @user, name: "Kris OMeara", address: "2101 Market Street", city: "Denver", state: "CO", zip: 80205, phone: "612-247-3127")
+    @address = UsersAddress.new(user_id: @user, name: "Kris OMeara", address: "2101 Market Street", 
+                                city: "Denver", state: "CO", zip: 80205, phone: "612-247-3127")
   end
   
   subject { @address }
+
   it { should respond_to(:user_id) }
   it { should respond_to(:name) }
   it { should respond_to(:address) }

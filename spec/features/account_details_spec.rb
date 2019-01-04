@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "Products users pages" do
-  subject { page }  #eliminates the repitition on the page variable 
+  subject { page } 
 
   before do 
     @user1 = FactoryGirl.create(:user) 
@@ -35,10 +35,6 @@ describe "Products users pages" do
   end
 
   describe "address pages" do
-    #new address page
-    #edit address page
-    #reroute back if you come from different locations (test the cookies)
-
     describe "when user adds shipping address information for the first time" do 
       before { click_link "Manage Address" }
 
@@ -179,7 +175,7 @@ describe "Products users pages" do
 
     describe "when user does have a purchase history" do 
       before do 
-        #add shipping address data for @user1
+        # add shipping address data for @user1
         click_link "Manage Address"
         fill_in "Name", with: 'Tyler VanNurden'
         fill_in "Address", with: '2101 Market Street Apt. 512'
@@ -189,21 +185,21 @@ describe "Products users pages" do
         fill_in "Phone", with: '612-247-3127'
         click_button "Add Address"
 
-        #@user1 purchase #1: @user1_product1, @user2_product1, @user2_product2, @user2_product3 already in cart
+        # @user1 purchase #1: @user1_product1, @user2_product1, @user2_product2, @user2_product3 already in cart
         visit user_checkout_path
         click_button "Purchase"
 
-        #@user1 purchase #2 (user1_product2)
+        # @user1 purchase #2 (user1_product2)
         visit products_path
         click_button "add_#{@user1_product2.id}_to_cart" 
         visit user_checkout_path
         click_button "Purchase"
 
-        #logout @user1 & login @user2
+        # logout @user1 & login @user2
         sign_out
         sign_in @user2
 
-        #add shipping address data for @user2
+        # add shipping address data for @user2
         visit new_address_path
         fill_in "Name", with: 'Nolan VanNurden'
         fill_in "Address", with: '2201 Market Street Apt. 517'
@@ -213,17 +209,17 @@ describe "Products users pages" do
         fill_in "Phone", with: '612-883-4257'
         click_button "Add Address"
 
-        #@user2 purchase #1 (user1_product3)
+        # @user2 purchase #1 (user1_product3)
         visit products_path
         click_button "add_#{@user1_product3.id}_to_cart" 
         visit user_checkout_path
         click_button "Purchase"
 
-        #logout @user2 & login @user1
+        # logout @user2 & login @user1
         sign_out
         sign_in @user1
 
-        #visit Order History page
+        # visit Order History page
         visit account_details_path
         click_link "Purchase History" 
 
@@ -307,7 +303,7 @@ describe "Products users pages" do
 
     describe "when user has a selling history" do 
       before do 
-        #add shipping address data for @user1
+        # add shipping address data for @user1
         click_link "Manage Address"
         fill_in "Name", with: 'Tyler VanNurden'
         fill_in "Address", with: '2101 Market Street Apt. 512'
@@ -317,21 +313,21 @@ describe "Products users pages" do
         fill_in "Phone", with: '612-247-3127'
         click_button "Add Address"
 
-        #@user1 purchase #1: @user1_product1, @user2_product1, @user2_product2, @user2_product3 already in cart
+        # @user1 purchase #1: @user1_product1, @user2_product1, @user2_product2, @user2_product3 already in cart
         visit user_checkout_path
         click_button "Purchase"
 
-        #@user1 purchase #2 (user1_product2)
+        # @user1 purchase #2 (user1_product2)
         visit products_path
         click_button "add_#{@user1_product2.id}_to_cart" 
         visit user_checkout_path
         click_button "Purchase"
 
-        #logout @user1 & login @user2
+        # logout @user1 & login @user2
         sign_out
         sign_in @user2
 
-        #add shipping address data for @user2
+        # add shipping address data for @user2
         visit new_address_path
         fill_in "Name", with: 'Nolan VanNurden'
         fill_in "Address", with: '2201 Market Street Apt. 517'
@@ -341,17 +337,17 @@ describe "Products users pages" do
         fill_in "Phone", with: '612-883-4257'
         click_button "Add Address"
 
-        #@user2 purchase #1 (user1_product3)
+        # @user2 purchase #1 (user1_product3)
         visit products_path
         click_button "add_#{@user1_product3.id}_to_cart" 
         visit user_checkout_path
         click_button "Purchase"
 
-        #logout @user2 & login @user1
+        # logout @user2 & login @user1
         sign_out
         sign_in @user1
 
-        #visit Order History page
+        # visit Order History page
         visit account_details_path
         click_link "Items Sold" 
 

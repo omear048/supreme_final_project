@@ -6,5 +6,4 @@ module AccountDetailsHelper
   def product_price(product_id)
     Product.find(product_id).price
   end
-
 end

@@ -1,9 +1,7 @@
 require 'spec_helper'
 
-#require 'capybara/rails' 
-
 describe "StaticPages" do
-  subject { page }  #eliminates the repitition on the page variable 
+  subject { page } 
   
   describe "home page" do 
     before { visit root_path }
@@ -38,7 +36,6 @@ describe "StaticPages" do
         click_link('image_4')
         expect(current_path).to eq(products_path)
       end
-
     end
 
     describe "top menu static fields" do
