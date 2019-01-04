@@ -51,6 +51,7 @@ gem 'popper_js', '~> 1.14.3'
 gem 'jquery-ui-rails'
 gem 'jquery-rails'
 
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "database_cleaner"
@@ -75,7 +76,11 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
+end
 
+group :production do
+  gem 'pg', '0.15.1'
+  gem 'rails_12factor', '0.0.2'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
