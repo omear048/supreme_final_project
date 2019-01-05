@@ -8,7 +8,6 @@ gem 'devise'
 gem 'erubis'
 gem 'bootstrap-sass', '2.3.2.0'# HTML & CSS Page Design  
 gem 'sprockets', '3.7.2' #HTML & CSS Page Design
-gem 'mailcatcher' #Used for testing the sending of emails on a local server
 gem 'stripe' #Payment processing
 gem 'faker'
 gem 'pg', '~> 0.18'
@@ -58,6 +57,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry'
+  gem 'mailcatcher' #Used for testing the sending of emails on a local server
 end
 
 group :development do
