@@ -11,6 +11,7 @@ gem 'sprockets', '3.7.2' #HTML & CSS Page Design
 gem 'mailcatcher' #Used for testing the sending of emails on a local server
 gem 'stripe' #Payment processing
 gem 'faker'
+gem 'pg', '~> 0.18'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -58,7 +59,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry'
   # Use sqlite3 as the database for Active Record
-  gem 'sqlite3'
+  # gem 'sqlite3'
 end
 
 group :development do
@@ -79,7 +80,6 @@ group :test do
 end
 
 group :production do
-  gem 'pg', '0.15.1'
   gem 'rails_12factor', '0.0.2'
 end
 
