@@ -20,8 +20,8 @@ gem 'mini_magick', '~> 4.3' #helps with resizing of images
 gem 'sprockets', '3.7.2' #HTML & CSS Page Design
 gem 'stripe' #Payment processing
 gem 'faker'
-#gem 'pg', '~> 0.18'
-gem 'sqlite3'
+#gem 'sqlite3'
+gem 'pg', '~> 0.18'
 
 #Active Storage Amazon: https://edgeguides.rubyonrails.org/active_storage_overview.html & https://devcenter.heroku.com/articles/active-storage-on-heroku
 gem "aws-sdk-s3", require: false
@@ -73,6 +73,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry'
   gem 'mailcatcher' #Used for testing the sending of emails on a local server
+  #gem 'sqlite3'
 end
 
 group :development do
