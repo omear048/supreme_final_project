@@ -1,49 +1,68 @@
 <div class="container">
-  <h1> Products For Sale </h1>
-    
-  <%= form_tag products_path, method: :get do %>
-    <p>
-    Search <%= text_field_tag :product_search, params[:product_search], placeholder: "Search Items" %>
-    <%= submit_tag 'Search', :name => nil %>
-    </p>
-  <% end %>
+  <div class="filter_options_container">
+    <div class="container">
+    <%= form_tag products_path, :method => :get do %>
+      <%= select_tag :category_search, options_from_collection_for_select(Category.all, "id", "category"), prompt: "Categories", class: 'filter-item' %>
+      <%= select_tag :size_search, options_from_collection_for_select( Size.all, "id", "size"), prompt: "Sizes", class: 'filter-item' %>
+      Min <%= text_field_tag :price_minimum_search, params[:price_minimum_search], placeholder: "Minimum Price", class: 'filter-item' %>
+      Max <%= text_field_tag :price_maximum_search, params[:price_maximum_search], placeholder: "Maximum Price", class: 'filter-item' %>
+      <%= submit_tag "Filter", name: nil %>
+    <% end %>
+    </div>
+  </div>
 
   <% if flash[:fail] %>
     <div class="fail-flash-message"><%= flash[:fail] %></div>
   <% elsif flash[:success] %>
     <div class="success-flash-message"><%= flash[:success] %></div>
   <% end %>
-
+  
+  <div class="products-container">
+  <br>
+  <br>
+  <br>
+  <br>
   <% if @products.any? %>
     <div class="row">
       <% @products.each do |item| %>
-        <div class="col-md-3 col-sm-6" id="product-id-<%= item.id %>">
-          <div class="product-grid">
-            <div class="product-image">
-              <a href="#">
-                <img class="pic-1" src= "<%= item.picture_url %>" >
-              </a>
-            </div>
-            <div class="product-content">
-              <h3 class="title"><a href="#"><%= item.title %> </a></h3>
-              <div class="price">
-                <%=  number_to_currency(item.price) %>
-              </div>
-              <% if @user == nil %>
-                <%= button_to "Add To Cart", new_user_session_path, id: "add_#{item.id}_to_cart" %>
-              <% else %>
-                <p>
-                <%= form_for(@add_product) do |f| %>
-                  <%= f.hidden_field :product_id, value: item.id, id: "data-product-id-#{@add_product.id}" %>
-                  <%= f.hidden_field :user_id, value: @user.id %>
-                  <%= f.submit "Add To Cart", id: "add_#{item.id}_to_cart"%>
+        <div class="col-md-4 col-sm-6" id="product-id-<%= item.id %>">
+          <div class="product-grid8">
+            <div class="product-image8">
+              <a href="<%=product_path(item.id)%>">
+                <% if item.product_image_1.attached? %> 
+                  <img class="pic-1" <%= image_tag url_for(item.product_image_1) %>>
                 <% end %>
-                </p>
+                <% if item.product_image_2.attached? %> 
+                  <img class="pic-2" <%= image_tag url_for(item.product_image_2) %>>
+                <% end %>
+              </a>
+              <% if @user == nil %>
+                <center><%= button_to "Add To Cart", new_user_session_path, id: "add_#{item.id}_to_cart", class: "fa fa-shopping-cart" %></center>
+              <% else %>
+              <%if ProductsUser.where(product_id: item.id, user_id: current_user.id) != []%>
+                <div class"remove">
+                    <td>
+                      <center>
+                        <%= button_to "Remove from Cart", delete_products_users_path(item.id), method: :delete, class: "fa fa-shopping-cart" %>
+                      </center>
+                    </td>
+                </div>
+              <% else %>
+                <div class"add">
+                  <center><%=button_to "Add to Cart", products_users_path( products_user: { :user_id => current_user.id , :product_id =>item.id } ), :method => :post, class: "fa fa-shopping-cart"%><center>
+                </div>
               <% end %>
+            <% end %>
+          </div>
+          <div class="product-content">
+            <center><h3 class="title"><a href="#"><%= item.title %> </a></h3></center>
+            <center><h3 class="title"><a href="#"><%= item.size %> </a></h3></center>
+            <div class="price">
+              <center><%=  number_to_currency(item.price) %></center>
             </div>
           </div>
-        </div>  
-      <% end %>  
-    </div>
-  <% end %>
-</div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<%end%>

@@ -1,33 +1,49 @@
 <h1> Order History </h1>
 
-<% if @orders == [] %>
+<% if current_user.orders == [] %>
   <center> <h3> "You have not yet made any purchases" </h3> </center>
 <% else %>
+<% @orders.each do |order| %>
   <div>
-    <% @orders.each do |order| %>
       <ol> <h3> <b> Order Number: <%= order.id %> </b> </h3> </ol>
-      <table style="width:100%">
+      <table class= "table table-bordered" style="width:100%">
         <col width="130">
         <col width="100">
         <tr>
           <th>Product Title</th>
           <th>Price</th> 
+          <th>Shipping Address</th>
         </tr>
         <% @total = 0 %>
-        <% @items.each do |item| %> 
-          <% if order.id == item.order_id %>
-            <tr>
-              <td><%= product_name(item.product_id) %></td>
-              <td><%= number_to_currency(product_price(item.product_id), :unit => "$") %></td> 
-            </tr>
-            <% @total += product_price(item.product_id) %>
-          <% end %>
+        <% @x = 0 %>
+        <% order.items_orders.each_with_index do |item, index| %> 
+          <tr>
+              <% @x += 1 %>
+              <% @total += product_price(item.product_id) %>
+                <td><%= product_name(item.product_id) %></td>
+                <td><%= number_to_currency(product_price(item.product_id), :unit => "$") %></td>
+                <% if index == 0 %>
+                  <td rowspan = '<%= order.items_orders.size + 1 %>'> 
+                    <%= order.name %>
+                    <br>
+                    <%= order.street %>
+                    <br>
+                    <%= order.city %>
+                    <br>
+                    <%= order.state %>
+                    <br>
+                    <%= order.zip %>
+                    <br>
+                    <%= order.phone %>
+                  </td>
+                <% end %>
+          </tr>
         <% end %>
         <tr> 
           <td> <b> Total </b> </td>
           <td> <b> <%= number_to_currency(@total , :unit => "$") %> </b> </td>
         </tr>
       </table>
-    <% end %>
   </div>
+  <% end %>
 <% end %>

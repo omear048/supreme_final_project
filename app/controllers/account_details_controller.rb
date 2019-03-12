@@ -37,6 +37,7 @@ class AccountDetailsController < ApplicationController
   end
 
   def orders
+    @products = Product.all
     @orders = current_user.orders
     @items = []
     @orders.each do |order|
@@ -48,7 +49,8 @@ class AccountDetailsController < ApplicationController
 
   def sold 
     @products = Product.where(user_id: current_user.id).where(sold: true)
-    @users_addresses = UsersAddress.all
+    @orders = Order.all
+    @items_orders = ItemsOrder.all 
   end
 
   private

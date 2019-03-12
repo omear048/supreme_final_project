@@ -1,38 +1,45 @@
-<header class="navbar navbar-fixed-top navbar-inverse">
-  <div class="navbar-inner">
-    <div class="container">
-      <%= link_to "supreme new york", root_path , id: "logo" %> 
-      <nav>
-        <ul class="nav pull-right">
-          <li><%= link_to "Home", root_path  %></li>
-          <li><%= link_to "Shop", products_path %></li>
-          <% if signed_in? %>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                Account <b class="caret"></b>
-              </a>
-              <ul class="dropdown-menu">
-                <li><%= link_to "Sell", new_product_path %></li>
-                <li><%= link_to "Selling", selling_product_path %></li>
-                <li><%= link_to "Cart", users_cart_path %> </li>
-                <li><%= link_to "Your Account", account_details_path %> </li>
-                <li class="divider"></li>
-                <li> 
-                  <%= link_to "Sign Out", destroy_user_session_path, method: "delete" %>
-                </li>
-              </ul>
-            </li>
-          <% else %>
-            <li>
-              <%= link_to "Member Login", new_user_session_path %>
-            </li>
-            <li>
-              <%= link_to "Member Signup", new_user_registration_path %>
-            </li>
-          <% end %> 
-          <li><%= link_to "About", 'https://www.supremenewyork.com/about' %></li>
-        </ul> 
-      </nav>
-    </div>
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href= <%= root_path %> > SUPERIOR RESALE NEW YORK </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href= <%= root_path %> >Home<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href= <%= products_path %> >Shop</a>
+      </li>
+      <% if signed_in? %>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Account
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href= <%= new_product_path %> >Sell</a>
+            <a class="dropdown-item" href= <%= selling_product_path %> >Selling</a>
+            <a class="dropdown-item" href= <%= users_cart_path %> >Cart</a>
+            <a class="dropdown-item" href= <%= account_details_path %> >Account Info</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" data-method="delete" href= <%= destroy_user_session_path %> >Sign Out</a>
+          </div>
+        </li>
+      <% else %>
+        <li class="nav-item">
+          <a class="nav-link" href= <%= new_user_session_path %> >Member Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href= <%= new_user_registration_path %> >Member Signup</a>
+        </li>
+      <% end %>
+      <li class="nav-item">
+          <a class="nav-link" href='https://www.supremenewyork.com/about'>Info</a>
+      </li>
+    </ul>
+      <%= form_tag products_path, :class => "form-inline my-2 my-lg-0", method: :get do %>
+        <%= text_field_tag :product_search, params[:product_search], placeholder: "Search Items", class: "form-control mr-sm-2"%>
+        <%= submit_tag "Search", class: "btn btn-outline-success my-2 my-sm-0" %>
+      <% end %>
   </div>
-</header>
+</nav>

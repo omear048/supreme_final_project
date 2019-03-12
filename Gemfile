@@ -2,15 +2,29 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.5.0'
-
 #Custom added gems
 gem 'devise'
 gem 'erubis'
-gem 'bootstrap-sass', '2.3.2.0'# HTML & CSS Page Design  
+#gem 'bootstrap-sass'# HTML & CSS Page Design  
+#gem 'bootstrap-sass', '2.3.2.0'# HTML & CSS Page Design  
+
+gem 'bootstrap'
+gem 'simple_form'
+gem 'tether-rails'
+
+#gems for photos (CarrierWave)
+gem 'carrierwave', '~> 0.10.0'
+gem 'mini_magick', '~> 4.3' #helps with resizing of images
+
+
 gem 'sprockets', '3.7.2' #HTML & CSS Page Design
 gem 'stripe' #Payment processing
 gem 'faker'
-gem 'pg', '~> 0.18'
+#gem 'pg', '~> 0.18'
+gem 'sqlite3'
+
+#Active Storage Amazon: https://edgeguides.rubyonrails.org/active_storage_overview.html & https://devcenter.heroku.com/articles/active-storage-on-heroku
+gem "aws-sdk-s3", require: false
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -45,9 +59,10 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 # For the dropdown menu 
-gem 'popper_js', '~> 1.14.3'
+gem 'popper_js'
 gem 'jquery-ui-rails'
 gem 'jquery-rails'
+
 
 
 group :development, :test do
@@ -83,3 +98,5 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+

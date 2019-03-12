@@ -1,4 +1,6 @@
-<h3>Account Management</h3>
+<center><h2>Account Management</h2></center>
+<br>
+<br>
 
 <% if flash[:success] %>
   <div class="success">
@@ -8,10 +10,21 @@
   </div>
 <% end %>
 
-<div>
+<div class="container">
   <% cookies[:previous_route] = account_details_path %>
-  <li> <%= link_to "Manage Address", new_address_path %> </li>
-  <li> <%= link_to "Purchase History", account_details_orders_path(current_user.id) %> </li>
-  <li> <%= link_to "Items Sold", sold_path %> </li>
+  <div class="row">
+    <div class="col">
+      <h3><center>Manage Address</center></h3>
+      <a href="<%=new_address_path%>"><img src="http://cdn.onlinewebfonts.com/svg/img_297883.png" class="img-fluid" alt="Responsive image"></a>
+    </div>
+    <div class="col">
+      <h3><center>Purchase History</center></h3>
+      <a href="<%=account_details_orders_path%>"><img src="http://cdn.onlinewebfonts.com/svg/img_141689.png" class="img-fluid" alt="Responsive image"></a>
+    </div>
+    <div class="col">
+      <h3><center>Items Sold</center></h3>
+      <a href="<%=sold_path%>"><img src="https://png.pngtree.com/svg/20160816/sell_out_496182.png" class="img-fluid" alt="Responsive image"></a>
+    </div>
+  </div>
 </div>
       

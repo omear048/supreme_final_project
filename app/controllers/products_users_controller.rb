@@ -3,10 +3,10 @@ class ProductsUsersController < ApplicationController
     add_product = ProductsUser.new(products_user_params)
     if add_product.save
       flash[:success] = "Product added to cart"
-      redirect_to products_path
+      redirect_to request.referrer
     elsif 
       flash[:fail] = "Product already in cart"
-      redirect_to products_path
+      redirect_to request.referrer
     end
   end
 
@@ -26,7 +26,7 @@ class ProductsUsersController < ApplicationController
   def destroy 
     ProductsUser.find_by(product_id: params[:product_id]).destroy
     flash[:success] = "Product removed from cart"
-    redirect_to users_cart_path
+    redirect_to request.referrer
   end
 
   def success 

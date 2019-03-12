@@ -1,14 +1,19 @@
 <h1>Shopping Cart</h1>
 
-<div>
+<div class=success-flash-message>
   <% if flash[:success] %>
-    <div class="success-flash-message"><%= flash[:success] %></div>
+    <div class="success"><%= flash[:success] %></div>
+    <br>
   <% end %>
+</div>
+
+<div>
   <ul>
-    <table style="width:100%">
+    <table class= "table table-bordered" style="width:100%">
       <tr>
         <th>Item</th>
-        <th>Price</th> 
+        <th>Price</th>
+        <th>Image</th> 
         <th>Removal</th>
       </tr>
       <% @items.each do |item| %>
@@ -18,6 +23,7 @@
               <tr>
                 <td><%= product_match.title %></td>
                 <td><%= number_to_currency(product_match.price, :unit => "$") %></td>
+                <td><img class="cart-pic" <%= image_tag url_for(product_match.product_image_1)%></td>
                 <td>
                   <%= link_to "Remove from Cart", delete_products_users_path(item.product_id), data: { confirm: "You sure? "}, method: :delete %>
                 </td>

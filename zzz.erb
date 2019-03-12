@@ -1,0 +1,61 @@
+<h1> Order History </h1>
+
+<% if @orders == [] %>
+  <center> <h3> "You have not yet made any purchases" </h3> </center>
+<% else %>
+  <div>
+
+    <% @orders.each do |order| %>
+
+      
+
+
+
+
+      <% order.items_orders.each do  |itemorder| %>
+        <h3> <%= itemorder.product.title %> </h3>
+      <% end %>
+    <% end %>
+
+
+
+    <% @orders.each_with_index do |order, index| %>
+
+
+    
+
+
+
+      <ol> <h3> <b> Order Number: <%= order.id %> </b> </h3> </ol>
+      <table style="width:100%">
+        <col width="130">
+        <col width="100">
+        <tr>
+          <th>Product Title</th>
+          <th>Price</th> 
+          <th>Shipping Address</th>
+        </tr>
+        <% @total = 0 %>
+        <% @x = 0 %>
+        <% @items.each_with_index do |item, index| %> 
+          <tr>
+            <% if order.id == item.order_id %>
+              <% @x += 1 %>
+              <% @total += product_price(item.product_id) %>
+                <td><%= product_name(item.product_id) %></td>
+                <td><%= number_to_currency(product_price(item.product_id), :unit => "$") %></td>
+            <% end %>
+
+            <% if @items.size - 1 == index %>
+              <td rowspan = '<%= @x + 1 %>'> Hello </td>
+            <% end %>
+          </tr>
+        <% end %>
+        <tr> 
+          <td> <b> Total </b> </td>
+          <td> <b> <%= number_to_currency(@total , :unit => "$") %> </b> </td>
+        </tr>
+      </table>
+    <% end %>
+  </div>
+<% end %>

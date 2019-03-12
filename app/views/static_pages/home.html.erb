@@ -1,14 +1,334 @@
-<div class="box-logo">
-  <h1> Welcome to Supreme </h1>
+<div>
+  <% if flash[:fail] %>
+    <div class="fail-flash-message"><%= flash[:fail] %></div>
+  <% elsif flash[:success] %>
+    <div class="success-flash-message"><%= flash[:success] %></div>
+  <% end %>
+
+  <!-- Masthead -->
+  <header class="masthead text-white text-center">
+    <div class="overlay"></div>
+    <div class="container-fluid">
+      <div class="rowheader"
+           style="background:transparent url('http://images.ctfassets.net/bdvz0u6oqffk/1emdDg9ikMeisCcw2wwYK8/f1b73bb99ba1ee8b66b01e56e7f826e9/search-cta-hero-D.jpg') no-repeat center center /cover">
+        <div class="col-xl-9 mx-auto">
+          <h1 class="mb-5">Welcome to Superior Resale New York</h1>
+        </div>
+        <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+          <%= form_tag products_path, :class => "form-row", method: :get do %>
+            <div class="col-12 col-md-9 mb-2 mb-md-0">
+              <%= text_field_tag :product_search, params[:product_search], placeholder: "Try 'Supreme'", class: "form-control form-control-lg" %>
+            </div>
+            <div class="col-12 col-md-3">
+              <%= submit_tag "Shop All", class: "btn btn-block btn-lg btn-primary" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+ </header>
+
+  <!-- Browse By Category -->
+  <section class="category-browser">
+    <h3 class="h3"> Browse By Category </h3>
+    <div class="container">
+      <div id="thumbs">
+        <figure>
+            <a href="<%=products_path(:category_search => 4)%>">
+                <img src="https://images.ctfassets.net/bdvz0u6oqffk/2DW6S0CcveiGAhVXG1hQUi/090b192c4ffb6a3793b9d1139fbacad8/Footwear.jpg?w=250&fm=webp" width="150px" height="150px"/>
+            </a>
+          <center><figcaption>Shoes</figcaption></center>
+        </figure>
+        <figure>
+            <a href="<%=products_path(:category_search => 1)%>">
+                <img src="https://images.ctfassets.net/bdvz0u6oqffk/2GGCt2nORim6m7WGNBHdsM/1fb112623aba0e0813b801d694a9565f/Tops.jpg?w=250&fm=webp" width="150px" height="150px"/>
+            </a>
+          <center><figcaption>Tops</figcaption></center>
+        </figure>
+        <figure>
+            <a href="<%=products_path(:category_search => 3)%>">
+                <img src="https://images.ctfassets.net/bdvz0u6oqffk/4u9eUfIV0GbbpOLUr5k66D/73e1aebb6223d5bdfcb9f8c70acb9630/Outerwear.jpg?w=250&fm=webp" width="150px" height="150px" />
+            </a>
+          <center><figcaption>Outerwear</figcaption></center>
+        </figure>
+        <figure>
+            <a href="<%=products_path(:category_search => 2)%>">
+                <img src="https://images.ctfassets.net/bdvz0u6oqffk/2r3YIRF842pUsDuQrZhBoS/2a794598c77d008550ee3275bf296df2/Bottoms.jpg?w=250&fm=webp" width="150px" height="150px" />
+            </a>
+          <center><figcaption>Bottoms</figcaption></center>
+        </figure>
+        <figure>
+            <a href="<%=products_path(:category_search => 6)%>">
+                <img src="https://images.ctfassets.net/bdvz0u6oqffk/2wDeVj2lKra1DKKfNmbUNw/22ac927e5f5730f4dd559f0e09dfda19/Accessories.jpg?w=250&fm=webp" width="150px" height="150px" />
+            </a>
+          <center><figcaption>Accessories</figcaption></center>
+        </figure>
+        <span class="stretch"></span>
+      </div>​
+    </div>
+  </section>
+
+<!-- Featured Items --> 
+<div class="container">
+    <h3 class="h3"> Featured Items </h3>
+    <div class="row">
+        <div class="col-md-3 col-sm-6">
+            <div class="product-grid2">
+                <div class="product-image2">
+                    <a href="<%=product_path(@newest_items[0].id)%>">
+                        <% if @newest_items[0].product_image_1.attached? %> 
+                            <img class="pic-1" <%= image_tag url_for(@newest_items[0].product_image_1) %>>
+                        <% end %>
+                        <% if @newest_items[0].product_image_2.attached? %>
+                            <img class="pic-2" <%= image_tag url_for(@newest_items[0].product_image_2) %>>
+                        <% end %> 
+                    </a>
+                    <% if @user == nil %>
+                      <center><%= button_to "Add To Cart", new_user_session_path, id: "add_#{@newest_items[0].id}_to_cart", class: "add-to-cart" %></center>
+                    <%elsif ProductsUser.where(product_id: @newest_items[0].id, user_id: current_user.id) != []%>
+                        <div class"remove">
+                            <td>
+                                <center>
+                                <%= button_to "Remove from Cart", delete_products_users_path(:product_id => @newest_items[0].id), method: :delete, class: "add-to-cart" %>
+                                </center>
+                            </td>
+                        </div>
+                    <% else %>
+                        <div class"add">
+                            <%=link_to "Add to Cart", products_users_path( products_user: { :user_id => current_user.id , :product_id => @newest_items[0].id } ), :method => :post, class: "add-to-cart"%>
+                        </div>
+                    <% end %>
+                </div>
+                <div class="product-content">
+                    <h3 class="title"><a href="<%=product_path(@newest_items[0].id)%>"><%=@newest_items[0].title%></a></h3>
+                    <span class="price"><%=number_to_currency(@newest_items[0].price)%></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="product-grid2">
+                <div class="product-image2">
+                    <a href="<%=product_path(@newest_items[1].id)%>">
+                        <% if @newest_items[1].product_image_1.attached? %> 
+                            <img class="pic-1" <%= image_tag url_for(@newest_items[1].product_image_1) %>>
+                        <% end %>
+                        <% if @newest_items[1].product_image_2.attached? %>
+                            <img class="pic-2" <%= image_tag url_for(@newest_items[1].product_image_2) %>>
+                        <% end %> 
+                    </a>
+                    <% if @user == nil %>
+                      <center><%= button_to "Add To Cart", new_user_session_path, id: "add_#{@newest_items[1].id}_to_cart", class: "add-to-cart" %></center>
+                    <%elsif ProductsUser.where(product_id: @newest_items[1].id, user_id: current_user.id) != []%>
+                        <div class"remove">
+                            <td>
+                                <center>
+                                <%= button_to "Remove from Cart", delete_products_users_path(:product_id => @newest_items[1].id), method: :delete, class: "add-to-cart" %>
+                                </center>
+                            </td>
+                        </div>
+                    <% else %>
+                        <div class"add">
+                            <%=link_to "Add to Cart", products_users_path( products_user: { :user_id => current_user.id , :product_id => @newest_items[1].id } ), :method => :post, class: "add-to-cart"%>
+                        </div>
+                    <% end %>
+                </div>
+                <div class="product-content">
+                    <h3 class="title"><a href="<%=product_path(@newest_items[1].id)%>"><%=@newest_items[1].title%></a></h3>
+                    <span class="price"><%=number_to_currency(@newest_items[1].price)%></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="product-grid2">
+                <div class="product-image2">
+                    <a href="<%=product_path(@newest_items[2].id)%>">
+                        <% if @newest_items[2].product_image_1.attached? %> 
+                            <img class="pic-1" <%= image_tag url_for(@newest_items[2].product_image_1) %>>
+                        <% end %>
+                        <% if @newest_items[2].product_image_2.attached? %>
+                            <img class="pic-2" <%= image_tag url_for(@newest_items[2].product_image_2) %>>
+                        <% end %> 
+                    </a>
+                    <% if @user == nil %>
+                      <center><%= button_to "Add To Cart", new_user_session_path, id: "add_#{@newest_items[2].id}_to_cart", class: "add-to-cart" %></center>
+                    <%elsif ProductsUser.where(product_id: @newest_items[2].id, user_id: current_user.id) != []%>
+                        <div class"remove">
+                            <td>
+                                <center>
+                                <%= button_to "Remove from Cart", delete_products_users_path(:product_id => @newest_items[2].id), method: :delete, class: "add-to-cart" %>
+                                </center>
+                            </td>
+                        </div>
+                    <% else %>
+                        <div class"add">
+                            <%=link_to "Add to Cart", products_users_path( products_user: { :user_id => current_user.id , :product_id => @newest_items[2].id } ), :method => :post, class: "add-to-cart"%>
+                        </div>
+                    <% end %>
+                </div>
+                <div class="product-content">
+                    <h3 class="title"><a href="<%=product_path(@newest_items[2].id)%>"><%=@newest_items[2].title%></a></h3>
+                    <span class="price"><%=number_to_currency(@newest_items[2].price)%></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="product-grid2">
+                <div class="product-image2">
+                    <a href="<%=product_path(@newest_items[3].id)%>">
+                        <% if @newest_items[3].product_image_1.attached? %> 
+                            <img class="pic-1" <%= image_tag url_for(@newest_items[3].product_image_1) %>>
+                        <% end %>
+                        <% if @newest_items[3].product_image_2.attached? %>
+                            <img class="pic-2" <%= image_tag url_for(@newest_items[3].product_image_2) %>>
+                        <% end %> 
+                    </a>
+                    <% if @user == nil %>
+                      <center><%= button_to "Add To Cart", new_user_session_path, id: "add_#{@newest_items[3].id}_to_cart", class: "add-to-cart" %></center>
+                    <%elsif ProductsUser.where(product_id: @newest_items[3].id, user_id: current_user.id) != []%>
+                        <div class"remove">
+                            <td>
+                                <center>
+                                <%= button_to "Remove from Cart", delete_products_users_path(:product_id => @newest_items[3].id), method: :delete, class: "add-to-cart" %>
+                                </center>
+                            </td>
+                        </div>
+                    <% else %>
+                        <div class"add">
+                            <%=link_to "Add to Cart", products_users_path( products_user: { :user_id => current_user.id , :product_id => @newest_items[3].id } ), :method => :post, class: "add-to-cart"%>
+                        </div>
+                    <% end %>
+                </div>
+                <div class="product-content">
+                    <h3 class="title"><a href="<%=product_path(@newest_items[3].id)%>"><%=@newest_items[3].title%></a></h3>
+                    <span class="price"><%=number_to_currency(@newest_items[3].price)%></span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<br>
-<h2> December 6th Drop Sneak Peak </h2>
-<div> 
-  <a id="image_1" href="http://localhost:3000/products"><img id="image1" src="https://assets.supremenewyork.com/152582/zo/cc2kidN5yOc1.jpg" style="float: left; width: 30%; margin-right: 1%; margin-bottom: 0.5em;" ></a>
 
-  <a id="image_2" href="http://localhost:3000/products"><img id="image2" src="https://assets.supremenewyork.com/152609/zo/qRgO0c9RD-A.jpg" style="float: left; width: 30%; margin-right: 1%; margin-bottom: 0.5em;" ></a>
+<section class="post__content-header">
+  <figure class="slider-single-image" data-behavior="zoomable" data-view="image-element" itemtype="http://schema.org/ImageObject" itemscope="">
+    <div class="aspect-ratio-placeholder  image responsive-image" style="max-width: 1200px;">
+      <div class="aspect-ratio-placeholder__fill" style="padding-bottom: 10%"></div>
+      <img sizes="(min-width: 1260px) 1200px, (min-width: 1024px) 960px, (min-width: 640px) 100vw, 100vw" src="https://static.highsnobiety.com/wp-content/uploads/2017/11/24163532/how-to-resell-supreme-main-480x320.jpg" srcset="https://static.highsnobiety.com/wp-content/uploads/2017/11/24163532/how-to-resell-supreme-main-480x320.jpg 480w, https://static.highsnobiety.com/wp-content/uploads/2017/11/24163532/how-to-resell-supreme-main-680x453.jpg 680w, https://static.highsnobiety.com/wp-content/uploads/2017/11/24163532/how-to-resell-supreme-main-960x640.jpg 960w, https://static.highsnobiety.com/wp-content/uploads/2017/11/24163532/how-to-resell-supreme-main-1200x800.jpg 1200w" alt="" class="image responsive-image" data-ratio="0.66666666666667" data-max-width="1200">
+    </div>
+    <div class="slider__slide__img-label">
+      <small class="slider__slide__img-label__credits" title="Photo by @SupCollector" itemprop="copyrightHolder" itemtype="http://schema.org/Person" itemscope="">
+        <a href="http://www.instragram.com/sup.collector" target="_blank" itemprop="name">
+          Instagram / @SupCollector
+        </a>
+      </small>
+    </div>
+  </figure>
+</section>
 
-  <a id="image_3" href="http://localhost:3000/products"><img id="image3" src="https://assets.supremenewyork.com/152194/zo/IkvqF0CQAV10.jpg" style="float: left; width: 30%; margin-right: 1%; margin-bottom: 0.5em;" ></a>
-
-  <a id="image_4" href="http://localhost:3000/products"><img id="image4" src="https://assets.supremenewyork.com/155724/ma/F2AIk7DKuhc.jpg" alt="Smiley face" height="802" width="802">
+<div class="container">
+    <h3 class="h3"> Trophy Case </h3>
+    <div class="row">
+        <div class="col-md-4 col-sm-6">
+            <div class="product-grid8">
+                <div class="product-image8">
+                    <a href="<%=product_path(@most_expensive_items[0].id)%>">
+                        <% if @most_expensive_items[0].product_image_1.attached? %> 
+                            <img class="pic-1" <%= image_tag url_for(@most_expensive_items[0].product_image_1) %>>
+                        <% end %>
+                        <% if @most_expensive_items[0].product_image_2.attached? %> 
+                            <img class="pic-2" <%= image_tag url_for(@most_expensive_items[0].product_image_2) %>>
+                        <% end %> 
+                    </a>
+                    <% if @user == nil %>
+                      <center><%= button_to "Add To Cart", new_user_session_path, id: "add_#{@most_expensive_items[0].id}_to_cart",class: "fa fa-shopping-cart" %></center>
+                    <%elsif ProductsUser.where(product_id: @most_expensive_items[0].id, user_id: current_user.id) != []%>
+                        <div class"remove">
+                            <td>
+                                <center>
+                                <%= button_to "Remove from Cart", delete_products_users_path(:product_id => @most_expensive_items[0].id), method: :delete, class: "fa fa-shopping-cart" %>
+                                </center>
+                            </td>
+                        </div>
+                    <% else %>
+                        <div class"add">
+                            <center><%=button_to "Add to Cart", products_users_path( products_user: { :user_id => current_user.id , :product_id => @most_expensive_items[0].id } ), :method => :post, class: "fa fa-shopping-cart"%>
+                        </div>
+                    <% end %>
+                </div>
+                <div class="product-content">
+                    <center><h3 class="title"><a href="<%=product_path(@most_expensive_items[0].id)%>"><%=@most_expensive_items[0].title%></a></h3></center>
+                    <div class="price"><center><%=number_to_currency(@most_expensive_items[0].price)%></center></div>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+            <div class="product-grid8">
+                <div class="product-image8">
+                    <a href="<%=product_path(@most_expensive_items[1].id)%>">
+                        <% if @most_expensive_items[1].product_image_1.attached? %> 
+                            <img class="pic-1" <%= image_tag url_for(@most_expensive_items[1].product_image_1) %>>
+                        <% end %>
+                        <% if @most_expensive_items[1].product_image_2.attached? %> 
+                            <img class="pic-2" <%= image_tag url_for(@most_expensive_items[1].product_image_2) %>>
+                        <% end %> 
+                    </a>
+                    <% if @user == nil %>
+                      <center><%= button_to "Add To Cart", new_user_session_path, id: "add_#{@most_expensive_items[1].id}_to_cart",class: "fa fa-shopping-cart" %></center>
+                    <%elsif ProductsUser.where(product_id: @most_expensive_items[1].id, user_id: current_user.id) != []%>
+                        <div class"remove">
+                            <td>
+                                <center>
+                                <%= button_to "Remove from Cart", delete_products_users_path(:product_id => @most_expensive_items[1].id), method: :delete, class: "fa fa-shopping-cart" %>
+                                </center>
+                            </td>
+                        </div>
+                    <% else %>
+                        <div class"add">
+                            <center><%=button_to "Add to Cart", products_users_path( products_user: { :user_id => current_user.id , :product_id => @most_expensive_items[1].id } ), :method => :post, class: "fa fa-shopping-cart"%><center>
+                        </div>
+                    <% end %>
+                </div>
+                <div class="product-content">
+                    <center><h3 class="title"><a href="<%=product_path(@most_expensive_items[1].id)%>"><%=@most_expensive_items[1].title%></a></h3></center>
+                    <div class="price"><center><%=number_to_currency(@most_expensive_items[1].price)%></center></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+            <div class="product-grid8">
+                <div class="product-image8">
+                    <a href="<%=product_path(@most_expensive_items[2].id)%>">
+                        <% if @most_expensive_items[2].product_image_1.attached? %> 
+                            <img class="pic-1" <%= image_tag url_for(@most_expensive_items[2].product_image_1) %>>
+                        <% end %>
+                        <% if @most_expensive_items[2].product_image_2.attached? %> 
+                            <img class="pic-2" <%= image_tag url_for(@most_expensive_items[2].product_image_2) %>>
+                        <% end %> 
+                    </a>
+                    <% if @user == nil %>
+                        <center><%= button_to "Add To Cart", new_user_session_path, id: "add_#{@most_expensive_items[2].id}_to_cart", class: "fa fa-shopping-cart" %></center>
+                    <%elsif ProductsUser.where(product_id: @most_expensive_items[2].id, user_id: current_user.id) != []%>
+                        <div class"remove">
+                            <td>
+                                <center>
+                                <%= button_to "Remove from Cart", delete_products_users_path(:product_id => @most_expensive_items[2].id), method: :delete, class: "fa fa-shopping-cart" %>
+                                </center>
+                            </td>
+                        </div>
+                    <% else %>
+                        <div class"add">
+                            <center><%=button_to "Add to Cart", products_users_path( products_user: { :user_id => current_user.id , :product_id => @most_expensive_items[2].id } ), :method => :post, class: "fa fa-shopping-cart"%></center>
+                        </div>
+                    <% end %>
+                </div>
+                <div class="product-content">
+                    <center><h3 class="title"><a href="<%=product_path(@most_expensive_items[2].id)%>"><%=@most_expensive_items[2].title%></a></h3></center>
+                    <div class="price"><center><%=number_to_currency(@most_expensive_items[2].price)%></center></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+

@@ -1,3 +1,4 @@
+
 class ProductsController < ApplicationController
   def new 
     @product = Product.new(user: current_user) 
@@ -14,12 +15,27 @@ class ProductsController < ApplicationController
     end
   end
 
+
   def index
     @user = current_user  
-    @products = Product.where(sold: false)
+
+    available_items = Product.where(sold: false)
     if params[:product_search]
-      @products = Product.search(params[:product_search])
+      @products = (available_items.where("title like ?", "%#{params[:product_search]}%")).order(created_at: :desc)
+    else
+      @products = (available_items).order(created_at: :desc)
     end
+
+    @products = (@products.where(category: params[:category_search])).order(created_at: :desc) if params[:category_search].present?
+    @products = (@products.where(size: params[:size_search])).order(created_at: :desc) if params[:size_search].present?
+    @products = (@products.where('price >= ?', params[:price_minimum_search])).order(created_at: :desc) if params[:price_minimum_search].present?
+    @products = (@products.where('price <= ?', params[:price_maximum_search])).order(created_at: :desc) if params[:price_maximum_search].present?    
+
+
+    if @products == []
+      flash[:fail] = "*Sorry no results match your search filter"
+    end
+
     @add_product = ProductsUser.new
   end
 
@@ -50,10 +66,11 @@ class ProductsController < ApplicationController
 
   def purchase 
     @user = current_user
-    @users_address = UsersAddress.where(user_id: @user.id)
+    @users_address = UsersAddress.find_by(user_id: @user.id)
     @products = Product.all
     @cart = ProductsUser.where(user_id: @user.id)
-    @order = Order.new(user_id: @user.id)
+    @order = Order.new(user_id: @user.id, name: @users_address.name, street: @users_address.address, city: @users_address.city,
+                       state: @users_address.state, zip: @users_address.zip, phone: @users_address.phone)
     @order.save
 
     @cart.each do |cart_product|
@@ -61,7 +78,7 @@ class ProductsController < ApplicationController
       item.save
       @products.each do |product|
         if product.id == cart_product.product_id
-          Product.find_by(id: product.id).update_attributes!(sold: 1, users_address_id: @users_address.ids[0])
+          Product.find_by(id: product.id).update_attributes!(sold: 1, users_address_id: @users_address.id)
         end
         ProductsUser.where(user_id: @user.id).destroy_all
       end 
@@ -69,9 +86,20 @@ class ProductsController < ApplicationController
     redirect_to user_checkout_success_path
   end
 
+  def show
+    @user = current_user
+    @product = Product.find(params[:product_id])
+    @add_product = ProductsUser.new
+  end
+
   private
 
     def product_params 
-      params.require(:product).permit(:user_id, :title, :price, :picture_url)
+      params.require(:product).permit(:user_id, :title, :price, :size, :category, :subcategory, 
+                                      :designer, :description, :product_image_1, :product_image_2, :product_image_3)
+    end
+
+    def filtering_params(params)
+      params.slice(:product_size, :product_category)
     end
 end

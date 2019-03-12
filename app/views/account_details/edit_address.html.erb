@@ -6,32 +6,32 @@
   <%= form_for @address, url: edit_address_path, html: { method: :post } do |f| %>
     <div class ="field">
       <%= f.label :name %><br/>
-      <%= f.text_area :name %><br/>
+      <%= f.text_area :name, {class: "form-control", rows: "1"} %><br/>
     <div>
 
     <div class ="field">
       <%= f.label :address %><br/>
-      <%= f.text_area :address %><br/>
+      <%= f.text_area :address, {class: "form-control"} %><br/>
     <div>
 
     <div class ="field">
       <%= f.label :city %><br/>
-      <%= f.text_area :city %><br/>
+      <%= f.text_area :city, {class: "form-control", rows: "1"} %><br/>
     <div>
 
     <div class ="field">
       <%= f.label :state %><br/>
-      <%= f.text_area :state %><br/>
+      <%= f.text_area :state, {class: "form-control", rows: "1"} %><br/>
     <div>
 
     <div class ="field">
       <%= f.label :zip %><br/>
-      <%= f.text_area :zip %><br/>
+      <%= f.text_area :zip, {class: "form-control", rows: "1"} %><br/>
     <div>
 
     <div class ="field">
       <%= f.label :phone %><br/>
-      <%= f.text_area :phone %><br/>
+      <%= f.text_area :phone, {class: "form-control", rows: "1"} %><br/>
     <div>
 
     <%= f.hidden_field :user_id, :value => current_user.id %>
