@@ -2,7 +2,7 @@ class Addingdesigners2 < ActiveRecord::Migration[5.2]
   def change
     Designer.create(designer: "Nike");
     Designer.create(designer: "Champion");
-    Designer.create(designer: "Addidas");
+    Designer.create(designer: "Adidas");
     Designer.create(designer: "Supreme");
     Designer.create(designer: "Stussy");
     Designer.create(designer: "Undefeated");
