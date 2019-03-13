@@ -1,5 +1,5 @@
 class ChangeAddidasToAdidas < ActiveRecord::Migration[5.2]
   def change
-    Designer.where(:name => 'Addidas').update(designer: 'Adidas')
+    execute "Update desginers SET designer = 'Adidas' WHERE designer = 'Addidas'"
   end
 end
