@@ -11,7 +11,6 @@
   <%= render 'shared/product_error_messages' %> 
   <%= f.hidden_field :user_id, :value => current_user.id %>
 
- 
   <div class ="field">
     <%= f.label :title %><br/>
     <%= f.text_area :title, {class: "form-control"} %><br/>
@@ -52,39 +51,34 @@
   <div class="container">
     <div class="row">
       <div class="col-sm">
-          <% if @product.product_image_1.attached?  %>
-            <%= image_tag url_for(@product.product_image_1), class: 'hidden image_to_upload_1' %>
-          <% else %>
-            <%= image_tag "https://scontent.fapa1-1.fna.fbcdn.net/v/t1.0-9/52333373_10214063985574057_6465033688768839680_n.jpg?_nc_cat=108&_nc_ht=scontent.fapa1-1.fna&oh=b14fcf9a373a31a5b482c44e5b4ec7da&oe=5CE4F9F4", class: 'hidden image_to_upload_1'%>
-          <% end %>
-          <br/><br/>
-          <%= f.label :product_image_1, 'Picture #1'%>
-          <%= f.file_field :product_image_1, class: 'photo_upload_1' %>
+        <%= image_tag "https://scontent.fapa1-1.fna.fbcdn.net/v/t1.0-9/52333373_10214063985574057_6465033688768839680_n.jpg?_nc_cat=108&_nc_ht=scontent.fapa1-1.fna&oh=b14fcf9a373a31a5b482c44e5b4ec7da&oe=5CE4F9F4", class: 'hidden image_to_upload_1' %>
+        <br/><br/>
+        <%= f.label :product_image_1, 'Picture #1'%>
+        <%= f.file_field :product_image_1, class: 'photo_upload_1' %>
       </div>
       <div class="col-sm">
-        <% if @product.product_image_2.attached? %> 
-          <%= image_tag url_for(@product.product_image_2), class: 'hidden image_to_upload_2' %>
-        <% else %>
-          <%= image_tag "https://scontent.fapa1-1.fna.fbcdn.net/v/t1.0-9/52333373_10214063985574057_6465033688768839680_n.jpg?_nc_cat=108&_nc_ht=scontent.fapa1-1.fna&oh=b14fcf9a373a31a5b482c44e5b4ec7da&oe=5CE4F9F4", class: 'hidden image_to_upload_2'%>
-        <% end %>
+        <%= image_tag "https://scontent.fapa1-1.fna.fbcdn.net/v/t1.0-9/52333373_10214063985574057_6465033688768839680_n.jpg?_nc_cat=108&_nc_ht=scontent.fapa1-1.fna&oh=b14fcf9a373a31a5b482c44e5b4ec7da&oe=5CE4F9F4", class: 'hidden image_to_upload_2' %>
         <br/><br/>
         <%= f.label :product_image_2, 'Picture #2'%>
         <%= f.file_field :product_image_2, class: 'photo_upload_2' %>
       </div>
       <div class="col-sm">
-         <% if @product.product_image_3.attached?  %>
-            <%= image_tag url_for(@product.product_image_3), class: 'hidden image_to_upload_3' %>
-          <% else %>
-            <%= image_tag "https://scontent.fapa1-1.fna.fbcdn.net/v/t1.0-9/52333373_10214063985574057_6465033688768839680_n.jpg?_nc_cat=108&_nc_ht=scontent.fapa1-1.fna&oh=b14fcf9a373a31a5b482c44e5b4ec7da&oe=5CE4F9F4", class: 'hidden image_to_upload_3'%>
-          <% end %>
+         <%= image_tag "https://scontent.fapa1-1.fna.fbcdn.net/v/t1.0-9/52333373_10214063985574057_6465033688768839680_n.jpg?_nc_cat=108&_nc_ht=scontent.fapa1-1.fna&oh=b14fcf9a373a31a5b482c44e5b4ec7da&oe=5CE4F9F4", class: 'hidden image_to_upload_3' %>
         <br/><br/>
         <%= f.label :product_image_3, 'Picture #3'%>
         <%= f.file_field :product_image_3, class: 'photo_upload_3' %>
       </div>
     </div>
   </div>
+
   <br>
+  <br>
+
   <div class="actions">
-    <%= f.submit "List Product", class: "btn btn-primary btn-lg btn-block"  %>
+    <%= f.submit "List Product", class: "btn btn-primary btn-lg btn-block" %>
   </div>
+
+  <br>
+  <br>
+  <br>
 <% end %>
