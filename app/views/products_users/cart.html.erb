@@ -23,7 +23,10 @@
               <tr>
                 <td><%= product_match.title %></td>
                 <td><%= number_to_currency(product_match.price, :unit => "$") %></td>
-                <td><img class="cart-pic" <%= image_tag url_for(product_match.product_image_1)%></td>
+                <% if item.product_image_1.attached? %>
+                  <td><img class="cart-pic" <%= image_tag url_for(product_match.product_image_1)%></td>
+                <% else %>
+                  <td><img class="cart-pic" </td>
                 <td>
                   <%= link_to "Remove from Cart", delete_products_users_path(item.product_id), data: { confirm: "You sure? "}, method: :delete %>
                 </td>
