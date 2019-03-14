@@ -27,7 +27,7 @@
                         <div class="col-md-5">
                             <div class="product-details-large" id="ProductPhoto">
                             <% if @product.product_image_1.attached? %> 
-                                <img id="ProductPhotoImg" class="product-zoom" data-image-id="" alt="12. Aliexpress dropshipping by oberlo" data-zoom-image=  src= "<%= @product.product_image_1 %>"
+                                <img id="ProductPhotoImg" class="product-zoom" data-image-id="" alt="12. Aliexpress dropshipping by oberlo" data-zoom-image=  src= <%= image_tag url_for(@product.product_image_1) %>
                             <% end %>
                             </div>
                             <div id="ProductThumbs" class="product-thumbnail owl-carousel">
