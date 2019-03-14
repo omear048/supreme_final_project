@@ -22,7 +22,11 @@
           <tr>
             <td><%= item.title %></td>
             <td><%= number_to_currency(item.price) %></td>
-            <td><img class="selling-pic", <%= image_tag url_for(item.product_image_1) %> </td>
+            <% if product_match.product_image_1.attached? %>
+              <td><img class="selling-pic", <%= image_tag url_for(item.product_image_1) %> </td>
+            <% else %>
+              <td><img class="selling-pic"> </td>
+            <% end %>
             <td> 
               <%= link_to "Edit Item", edit_listed_product_path(item.id), method: :get %> 
             </td>
