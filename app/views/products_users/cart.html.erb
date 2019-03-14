@@ -23,7 +23,7 @@
               <tr>
                 <td><%= product_match.title %></td>
                 <td><%= number_to_currency(product_match.price, :unit => "$") %></td>
-                <% if item.product_image_1.attached? %>
+                <% if product_match.product_image_1.attached? %>
                   <td><img class="cart-pic" <%= image_tag url_for(product_match.product_image_1)%></td>
                 <% else %>
                   <td><img class="cart-pic"></td>
