@@ -1,154 +1,666 @@
-<% if flash[:fail] %>
-    <div class="fail-flash-message"><%= flash[:fail] %></div>
-<% elsif flash[:success] %>
-    <div class="success-flash-message"><%= flash[:success] %></div>
-<% end %>
-
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
-
-    <link href="http://cdn.shopify.com/s/files/1/0067/5617/1846/t/2/assets/timber.scss.css" rel="stylesheet" type="text/css" media="all" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/elevatezoom/3.0.8/jquery.elevatezoom.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
-
-
-<div class="wrapper">
-    <main>
-        <div id="shopify-section-product-template" class="shopify-section">
-            <div class="single-product-area mt-80 mb-80">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-5">
-                            <div class="product-details-large" id="ProductPhoto">
-                            <% if @product.product_image_1.attached? %> 
-                                <img id="ProductPhotoImg" class="product-zoom" data-image-id="" alt="12. Aliexpress dropshipping by oberlo" data-zoom-image=  src= <%= image_tag url_for(@product.product_image_1) %>
-                            <% end %>
-                            </div>
-                            <div id="ProductThumbs" class="product-thumbnail owl-carousel">
-                                <a class="product-single__thumbnail " href="<%=@product.product_image_2%>" 
-                                data-image="<%=@product.product_image_2%>" data-zoom-image="<%=@product.product_image_2%>" data-image-id="6995358023750">
-                                <%= image_tag url_for(@product.product_image_2) %> </a>
-      
-                                <a class="product-single__thumbnail " href="<%=@product.product_image_3%>" 
-                                data-image="<%=@product.product_image_3%>" data-zoom-image="<%=@product.product_image_3%>" data-image-id="6995358023750">
-                                <%= image_tag url_for(@product.product_image_3) %> </a>
-      
-                                <a class="product-single__thumbnail ">
-                                <%= image_tag url_for(@product.product_image_1) %> 
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-md-7">
-                            <div class="single-product-content">
-                                <form method="post" id="AddToCartForm" accept-charset="UTF-8" class="shopify-product-form" enctype="multipart/form-data">
-                                    <input type="hidden" name="form_type" value="product" /><input type="hidden" name="utf8" value="✓" />
-                                    <div class="product-details">
-                                        <h1 class="single-product-name"><%= @product.title %></h1>
-                                        <div class="single-product-reviews">
-                                            <span class="shopify-product-reviews-badge" data-id="1912078270534"></span>
-                                        </div>
-                                        <div class="single-product-price">
-                                            <div class="product-discount"><span  class="price" id="ProductPrice"><span class=money><%= number_to_currency(@product.price) %></span></span></div>
-                                        </div>
-                                        <div class="product-info"><%= @product.description %></div>
-                      
-                                        <div class="single-product-action">
-                                            <div class="product-variant-option"> 
-                                                <select name="id" id="productSelect" class="product-single__variants" style="display:none;">   
-                                                    <option  selected="selected"  data-sku="YQT71020193" value="19506517377094">Default Title - <span class=money>$20.66 USD</span></option>
-                                
-                                                </select>
-                                            </div>
-                                            <style>.product-variant-option .selector-wrapper{display: none;}</style>
-                                            <div class="product-add-to-cart">
-                                                <% if @user == nil %>
-                                                    <%= link_to "Add To Cart", new_user_session_path, id: "add_#{@product.id}_to_cart", class: "btn btn-primary btn-lg" %>
-                                                <%elsif ProductsUser.where(product_id: @product.id, user_id: current_user.id) != []%>
-                                                <div class"remove">
-                                                    <td>
-                                                        <%= link_to "Remove from Cart", delete_products_users_path(@product.id), method: :delete, class: "btn btn-primary btn-lg"%>
-                                                    </td>
-                                                </div>
-                                                <% else %>
-                                                <div class="add">
-                                                    <%= link_to " Add To Cart", products_users_path( products_user: { :user_id => current_user.id , :product_id => @product.id } ), :method => :post, class: "btn btn-primary btn-lg" %>
-                                                </div>
-                                                <% end %>
-                                            </div>
-                                            <div class="secure-payment"><img src="http://cdn.shopify.com/s/files/1/0067/5617/1846/files/guaranteed_safe_checkout1.png?v=1545216773"></div>                                                                  
-                                        </div>                                                        
-                                    </div>
-                                </form> 
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<section class="product-main" itemscope="" itemtype="http://schema.org/Product">
+            <div class="product-essential">
+                <div class="product-mobile-essential-top">
+                    <div id="widget-cmsblockschedule-container-a449234d89632dc9b69caf7fd67d6cb5">
+    <div class="widget widget-static-block widget-cmsblockschedule before-block" style="display:none;">
             </div>
-            <style type="text/css">.product-details .countdown-timer-wrapper{display: none !important;}</style>
-                                            
-            <script>$(document).ready(function() {$('.fancybox').fancybox();});</script>
-            <script>function productZoom(){
-                    $(".product-zoom").elevateZoom({
-                      gallery: 'ProductThumbs',
-                      galleryActiveClass: "active",
-                      zoomType: "inner",
-                      cursor: "crosshair"
-                    });$(".product-zoom").on("click", function(e) {
-                      var ez = $('.product-zoom').data('elevateZoom');
-                      $.fancybox(ez.getGalleryList());
-                      return false;
-                    });
-                    
-                    };
-                  function productZoomDisable(){
-                    if( $(window).width() < 767 ) {
-                      $('.zoomContainer').remove();
-                      $(".product-zoom").removeData('elevateZoom');
-                      $(".product-zoom").removeData('zoomImage');
-                    } else {
-                      productZoom();
-                    }
-                  };
-                  productZoomDisable();
-                  $(window).resize(function() {
-                    productZoomDisable();
-                  });
-            </script>
-            <script>
-                $('.product-thumbnail').owlCarousel({
-                    loop: true,
-                    center: true,
-                    nav: true,dots:false,
-                    margin:10,
-                    autoplay: false,
-                    autoplayTimeout: 5000,
-                    navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-                    item: 3,
-                    responsive: {
-                        0: {
-                            items: 2
-                        },
-                        480: {
-                            items: 3
-                        },
-                        992: {
-                            items: 3,
-                        },
-                        1170: {
-                            items: 3,
-                        },
-                        1200: {
-                            items: 3
-                        }
-                    }
-                });
-            </script>
-        </div>
-    </main>
+    <div class="widget widget-static-block widget-cmsblockschedule during-block" style="display:none;">
+        <p style="color: #a41d23; font-style: italic; font-weight: bold; text-align: center;">Celebrate Spring with Stadium Goods! Enjoy 15% off site-wide until <span id="countdown-timer-6c4afacadbcc9b28dc323857720003db"></span>
+<script type="text/javascript">
+//<![CDATA[
+new CountdownTimer({
+    selector: '#countdown-timer-6c4afacadbcc9b28dc323857720003db',
+    dateStart: new Date('2019-03-15T03:10:01.000Z'),
+    dateEnd: new Date('2017-03-21T03:59:59.000Z'),
+    msgPattern: "{hours}:{minutes}:{seconds}",
+    leadingZeros: true
+});
+//]]>
+</script>
+</p>    </div>
+    <div class="widget widget-static-block widget-cmsblockschedule after-block" style="">
+            </div>
 </div>
+<script type="text/javascript">
+//<![CDATA[
+jQuery(document).ready(function() {
+    function utcTimestamp(date) {
+        var utcTimestamp = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
+          date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds(), date.getUTCMilliseconds());
+
+        return utcTimestamp / 1000;
+    }
+
+    var startTimestamp = 1489982400;
+    var endTimestamp = 1490068799;
+    var beforeShowed = false;
+    var duringShowed = false;
+    var afterShowed = false;
+
+    setInterval(function() {
+        var now = new Date();
+        var currentTimestamp = utcTimestamp(now);
+
+        if(currentTimestamp < startTimestamp) {
+            if(!beforeShowed) {
+                jQuery('#widget-cmsblockschedule-container-a449234d89632dc9b69caf7fd67d6cb5 .before-block').show();
+                jQuery('#widget-cmsblockschedule-container-a449234d89632dc9b69caf7fd67d6cb5 .during-block').hide();
+                jQuery('#widget-cmsblockschedule-container-a449234d89632dc9b69caf7fd67d6cb5 .after-block').hide();
+                beforeShowed = true;
+            }
+        } else if(currentTimestamp >= startTimestamp && currentTimestamp <= endTimestamp) {
+            if(!duringShowed) {
+                jQuery('#widget-cmsblockschedule-container-a449234d89632dc9b69caf7fd67d6cb5 .before-block').hide();
+                jQuery('#widget-cmsblockschedule-container-a449234d89632dc9b69caf7fd67d6cb5 .during-block').show();
+                jQuery('#widget-cmsblockschedule-container-a449234d89632dc9b69caf7fd67d6cb5 .after-block').hide();
+                duringShowed = true;
+            }
+
+        } else if(currentTimestamp > endTimestamp) {
+            if(!afterShowed) {
+                jQuery('#widget-cmsblockschedule-container-a449234d89632dc9b69caf7fd67d6cb5 .before-block').hide();
+                jQuery('#widget-cmsblockschedule-container-a449234d89632dc9b69caf7fd67d6cb5 .during-block').hide();
+                jQuery('#widget-cmsblockschedule-container-a449234d89632dc9b69caf7fd67d6cb5 .after-block').show();
+                afterShowed = true;
+            }
+
+        }
+    }, 1000);
+});
+//]]>
+</script>
+<div id="widget-cmsblockschedule-container-8a849915578419189d148971b7ed9b5c">
+    <div class="widget widget-static-block widget-cmsblockschedule before-block" style="display:none;">
+            </div>
+    <div class="widget widget-static-block widget-cmsblockschedule during-block" style="display:none;">
+        <p style="color: #a41d23; font-style: italic; font-weight: bold; text-align: center;">Happy Memorial Day! 15% off today only&nbsp;<span id="countdown-timer-ea43dcc9ceae9fbd461397b596d4bdc1"></span>
+<script type="text/javascript">
+//<![CDATA[
+new CountdownTimer({
+    selector: '#countdown-timer-ea43dcc9ceae9fbd461397b596d4bdc1',
+    dateStart: new Date('2019-03-15T03:10:01.000Z'),
+    dateEnd: new Date('2017-05-30T03:59:59.000Z'),
+    msgPattern: "{hours}:{minutes}:{seconds}",
+    leadingZeros: true
+});
+//]]>
+</script>
+</p>    </div>
+    <div class="widget widget-static-block widget-cmsblockschedule after-block" style="">
+            </div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+jQuery(document).ready(function() {
+    function utcTimestamp(date) {
+        var utcTimestamp = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
+          date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds(), date.getUTCMilliseconds());
+
+        return utcTimestamp / 1000;
+    }
+
+    var startTimestamp = 1496030400;
+    var endTimestamp = 1496116799;
+    var beforeShowed = false;
+    var duringShowed = false;
+    var afterShowed = false;
+
+    setInterval(function() {
+        var now = new Date();
+        var currentTimestamp = utcTimestamp(now);
+
+        if(currentTimestamp < startTimestamp) {
+            if(!beforeShowed) {
+                jQuery('#widget-cmsblockschedule-container-8a849915578419189d148971b7ed9b5c .before-block').show();
+                jQuery('#widget-cmsblockschedule-container-8a849915578419189d148971b7ed9b5c .during-block').hide();
+                jQuery('#widget-cmsblockschedule-container-8a849915578419189d148971b7ed9b5c .after-block').hide();
+                beforeShowed = true;
+            }
+        } else if(currentTimestamp >= startTimestamp && currentTimestamp <= endTimestamp) {
+            if(!duringShowed) {
+                jQuery('#widget-cmsblockschedule-container-8a849915578419189d148971b7ed9b5c .before-block').hide();
+                jQuery('#widget-cmsblockschedule-container-8a849915578419189d148971b7ed9b5c .during-block').show();
+                jQuery('#widget-cmsblockschedule-container-8a849915578419189d148971b7ed9b5c .after-block').hide();
+                duringShowed = true;
+            }
+
+        } else if(currentTimestamp > endTimestamp) {
+            if(!afterShowed) {
+                jQuery('#widget-cmsblockschedule-container-8a849915578419189d148971b7ed9b5c .before-block').hide();
+                jQuery('#widget-cmsblockschedule-container-8a849915578419189d148971b7ed9b5c .during-block').hide();
+                jQuery('#widget-cmsblockschedule-container-8a849915578419189d148971b7ed9b5c .after-block').show();
+                afterShowed = true;
+            }
+
+        }
+    }, 1000);
+});
+//]]>
+</script>
+                </div>
+
+                <div class="product-top">
+                    
+<div class="breadcrumbs breadcrumbs-visible" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+    <ul>
+                    <li class="home" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                                    <a href="https://www.stadiumgoods.com/" title="Go to Home Page" itemprop="item">
+                        <span itemprop="name">Home</span>
+                    </a>
+                                                <meta itemprop="position" content="1">
+            </li>
+                    <li class="category102" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                                    <a href="https://www.stadiumgoods.com/supreme" title="Supreme" itemprop="item">
+                        <span itemprop="name">Supreme</span>
+                    </a>
+                                                <meta itemprop="position" content="2">
+            </li>
+                    <li class="product" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                                    <strong itemprop="name">RIMOWA Topas Multiwheel 45L</strong>
+                                                                                    <meta itemprop="position" content="3">
+            </li>
+            </ul>
+</div>
+                    <div class="product-brand" itemprop="brand">Supreme</div>
+                    <h1 class="product-name" itemprop="name">RIMOWA Topas Multiwheel 45L</h1>
+                    <meta itemprop="sku" content="SU4216">
+                    <meta itemprop="category" content="Supreme">
+                    <meta itemprop="color" content="RED">
+                                    </div>
+
+                <div class="product-mobile-gallery">
+                    <div class="product-mobile-gallery__images slick-initialized slick-slider" role="toolbar">
+                        
+            <div aria-live="polite" class="slick-list draggable"><div class="slick-track" role="listbox" style="opacity: 1; width: 0px; transform: translate3d(0px, 0px, 0px);"><div class="product-gallery-image slick-slide slick-cloned" data-slick-index="-1" aria-hidden="true" tabindex="-1" style="width: 0px;">
+            <img itemprop="image" src="https://www.stadiumgoods.com/media/catalog/product/cache/1/base/1000x600/9df78eab33525d08d6e5fb8d27136e95/s/u/su4216_3.png" alt="Supreme RIMOWA Topas Multiwheel 45L &quot;SS 18&quot; - SU4216" title="Supreme RIMOWA Topas Multiwheel 45L &quot;SS 18&quot; - SU4216">
+        </div><div class="product-gallery-image slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabindex="0" role="option" aria-describedby="slick-slide00" style="width: 0px;">
+            <img itemprop="image" src="https://www.stadiumgoods.com/media/catalog/product/cache/1/base/1000x600/9df78eab33525d08d6e5fb8d27136e95/s/u/su4216_1.png" alt="Supreme RIMOWA Topas Multiwheel 45L &quot;SS 18&quot; - SU4216" title="Supreme RIMOWA Topas Multiwheel 45L &quot;SS 18&quot; - SU4216">
+        </div><div class="product-gallery-image slick-slide" data-slick-index="1" aria-hidden="true" tabindex="-1" role="option" aria-describedby="slick-slide01" style="width: 0px;">
+            <img itemprop="image" src="https://www.stadiumgoods.com/media/catalog/product/cache/1/base/1000x600/9df78eab33525d08d6e5fb8d27136e95/s/u/su4216_2.png" alt="Supreme RIMOWA Topas Multiwheel 45L &quot;SS 18&quot; - SU4216" title="Supreme RIMOWA Topas Multiwheel 45L &quot;SS 18&quot; - SU4216">
+        </div><div class="product-gallery-image slick-slide" data-slick-index="2" aria-hidden="true" tabindex="-1" role="option" aria-describedby="slick-slide02" style="width: 0px;">
+            <img itemprop="image" src="https://www.stadiumgoods.com/media/catalog/product/cache/1/base/1000x600/9df78eab33525d08d6e5fb8d27136e95/s/u/su4216_3.png" alt="Supreme RIMOWA Topas Multiwheel 45L &quot;SS 18&quot; - SU4216" title="Supreme RIMOWA Topas Multiwheel 45L &quot;SS 18&quot; - SU4216">
+        </div><div class="product-gallery-image slick-slide slick-cloned" data-slick-index="3" aria-hidden="true" tabindex="-1" style="width: 0px;">
+            <img itemprop="image" src="https://www.stadiumgoods.com/media/catalog/product/cache/1/base/1000x600/9df78eab33525d08d6e5fb8d27136e95/s/u/su4216_1.png" alt="Supreme RIMOWA Topas Multiwheel 45L &quot;SS 18&quot; - SU4216" title="Supreme RIMOWA Topas Multiwheel 45L &quot;SS 18&quot; - SU4216">
+        </div></div></div>
+            
+            
+                        <ul class="product-mobile-gallery-dots product-dots" style="display: block;" role="tablist"><li class="slick-active" aria-hidden="false" role="presentation" aria-selected="true" aria-controls="navigation00" id="slick-slide00"><button type="button" data-role="none" role="button" aria-required="false" tabindex="0">1</button></li><li aria-hidden="true" role="presentation" aria-selected="false" aria-controls="navigation01" id="slick-slide01"><button type="button" data-role="none" role="button" aria-required="false" tabindex="0">2</button></li><li aria-hidden="true" role="presentation" aria-selected="false" aria-controls="navigation02" id="slick-slide02"><button type="button" data-role="none" role="button" aria-required="false" tabindex="0">3</button></li></ul></div>
+                </div>
+
+                <div class="product-shop">
+                                                                                                <span style="display: none" itemprop="offers" itemscope="" itemtype="http://schema.org/AggregateOffer">
+                                <span itemprop="lowPrice">5970.0000</span>
+                                <span itemprop="highPrice">5975.0000</span>
+                                <meta itemprop="priceCurrency" content="USD">
+                                                                                                                                <div itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+                                                                        <span itemprop="name">RIMOWA Topas Multiwheel 45L - OS</span>
+                                    <span itemprop="price">5970.0000</span>
+                                    <meta itemprop="priceCurrency" content="USD">
+                                                                        <link itemprop="availability" href="http://schema.org/InStock">
+                                                                                                                                            </div>
+                                                                                            </span>
+                                                
+
+<div class="product-options configurable-product-options" id="product-options-wrapper" data-options-url="https://www.stadiumgoods.com/ajax/product/options/product_id/242596/">
+        <div class="configurable-product-options-loading" style="display:none;">Loading...</div>
+        
+
+            
+                        <div class="product-sizes">
+        <div class="product-sizes__selected product-sizes-selected" data-injection-modal-target="modal-product">
+            <span class="product-sizes__detail">
+                <span class="product-sizes__size " data-selected-size="" data-selected-size-label="Size">Size OS</span>
+                <span class="product-sizes__price" data-selected-price="">$5,970.00</span>
+            </span>
+        </div>
+        <div class="product-sizes__options" data-option-count="1">
+                        <label class="product-sizes__option" data-flow-item-number="242595" data-flow-item-name="RIMOWA Topas Multiwheel 45L">
+                <span class="product-sizes__detail">
+                    <span class="product-sizes__size">OS</span>
+                    <span class="product-sizes__price">
+                                                                                    <span class="price" data-flow-localize="item-price">$5,970.00</span>
+                                                                        </span>
+                </span>
+                
+                <!-- value should be a simple product ID -->
+                <input class="product-sizes__input" data-size="OS" data-price="$5,970.00" data-stock="true" type="radio" name="productsizes" value="214" data-condition="false" data-attr-id="132" data-serializedproduct-id="726883">
+            </label>
+                    </div>
+    </div>
+    <div class="input-box no-display">
+        <select name="super_attribute[132]" id="attribute132" class="required-entry super-attribute-select">
+            
+        <option value="">Choose an Option...</option><option value="214">OS</option></select>
+    </div>
+    <div id="product-condition-wrapper"></div>
+            <input type="hidden" name="serializedproduct_id" value="726883" id="serializedproduct-id">
+    <input type="hidden" name="serialized-product-size" value="OS" id="serialized-product-size">
+    <input type="hidden" name="main-product-id" value="242596" id="main-product-id">
+        <script type="text/javascript">
+        var spConfig = new Product.Config({"attributes":{"132":{"id":"132","code":"size","label":"Size","options":[{"id":"214","label":"OS","oldPrice":"0","products":["242595"]}]}},"template":"$#{price}","basePrice":"5970","oldPrice":"5970","productId":"242596","chooseText":"Choose an Option...","taxConfig":{"includeTax":false,"showIncludeTax":false,"showBothPrices":false,"defaultTax":0,"currentTax":0,"inclTaxTitle":"Incl. Tax"},"childProducts":{"242595":{"price":"5970","finalPrice":"5970","serializedProductId":"726883","isInStock":true,"specialPrice":"","showOldPrice":true,"productName":"RIMOWA Topas Multiwheel 45L - OS","shortDescription":"RIMOWA Topas Multiwheel 45L<br \/>\nSU4216","productAttributes":"    <h2>Additional Information<\/h2>\n    <table class=\"data-table\" id=\"product-attribute-specs-table\">\n        <tbody>\n                    <tr>\n                <th class=\"label\">Manufacturer Sku<\/th>\n                <td class=\"data\">SU4216<\/td>\n            <\/tr>\n                    <tr>\n                <th class=\"label\">Nickname<\/th>\n                <td class=\"data\">SS 18<\/td>\n            <\/tr>\n                    <tr>\n                <th class=\"label\">Gender<\/th>\n                <td class=\"data\">Mens<\/td>\n            <\/tr>\n                    <tr>\n                <th class=\"label\">Colorway<\/th>\n                <td class=\"data\">RED<\/td>\n            <\/tr>\n                    <tr>\n                <th class=\"label\">Materials<\/th>\n                <td class=\"data\">Multi<\/td>\n            <\/tr>\n                <\/tbody>\n    <\/table>\n    <script type=\"text\/javascript\">decorateTable('product-attribute-specs-table')<\/script>\n","serializedAttributesArray":{"serial_number":{"label":"Serial Number","value":"1812585725"},"status":{"label":"Status","value":"Available"},"warehouse":{"label":"Warehouse","value":"SGD"}},"serializedAttributes":"\n<table class=\"data-table\" id=\"serializedproduct-attribute-specs-table\">\n    <col width=\"25%\" \/>\n    <col \/>\n    <tbody>\n                    <tr>\n            <th class=\"label\">Serial Number<\/th>\n            <td class=\"data\">1812585725<\/td>\n        <\/tr>\n                            <tr>\n            <th class=\"label\">Status<\/th>\n            <td class=\"data\">Available<\/td>\n        <\/tr>\n                            <tr>\n            <th class=\"label\">Warehouse<\/th>\n            <td class=\"data\">SGD<\/td>\n        <\/tr>\n                <\/tbody>\n<\/table>\n\n<script type=\"text\/javascript\">decorateTable('serializedproduct-attribute-specs-table')<\/script>\n"}},"productName":"RIMOWA Topas Multiwheel 45L","description":"Supreme made sure fans could travel in style with its Rimowa collaboration for spring 2018. Supreme worked with the premium luggage maker to create a heavy-duty Topas Multiwheel 45L suitcase. The carry-on case has the grooved aluminum construction that Rimowa is known for and the iconic Supreme logo is wrapped around the bottom. TSA combination locks and internal dividers keep all the suitcase's contents secure.","shortDescription":"Supreme made sure fans could travel in style with its Rimowa collaboration for spring 2018. Supreme worked with the premium luggage maker to create a heavy-duty Topas Multiwheel 45L suitcase. The carry-on case has the grooved aluminum construction that Rimowa is known for and the iconic Supreme logo is wrapped around the bottom. TSA combination locks and internal dividers keep all the suitcase's contents secure.","productAttributes":"    <h2>Additional Information<\/h2>\n    <table class=\"data-table\" id=\"product-attribute-specs-table\">\n        <tbody>\n                    <tr>\n                <th class=\"label\">Manufacturer Sku<\/th>\n                <td class=\"data\">SU4216<\/td>\n            <\/tr>\n                    <tr>\n                <th class=\"label\">Nickname<\/th>\n                <td class=\"data\">SS 18<\/td>\n            <\/tr>\n                    <tr>\n                <th class=\"label\">Gender<\/th>\n                <td class=\"data\">Mens<\/td>\n            <\/tr>\n                    <tr>\n                <th class=\"label\">Colorway<\/th>\n                <td class=\"data\">RED<\/td>\n            <\/tr>\n                    <tr>\n                <th class=\"label\">Materials<\/th>\n                <td class=\"data\">Multi<\/td>\n            <\/tr>\n                <\/tbody>\n    <\/table>\n    <script type=\"text\/javascript\">decorateTable('product-attribute-specs-table')<\/script>\n"});
+    </script>
+        <script type="text/javascript">
+//<![CDATA[
+var DateOption = Class.create({
+
+    getDaysInMonth: function(month, year)
+    {
+        var curDate = new Date();
+        if (!month) {
+            month = curDate.getMonth();
+        }
+        if (2 == month && !year) { // leap year assumption for unknown year
+            return 29;
+        }
+        if (!year) {
+            year = curDate.getFullYear();
+        }
+        return 32 - new Date(year, month - 1, 32).getDate();
+    },
+
+    reloadMonth: function(event)
+    {
+        var selectEl = event.findElement();
+        var idParts = selectEl.id.split("_");
+        if (idParts.length != 3) {
+            return false;
+        }
+        var optionIdPrefix = idParts[0] + "_" + idParts[1];
+        var month = parseInt($(optionIdPrefix + "_month").value);
+        var year = parseInt($(optionIdPrefix + "_year").value);
+        var dayEl = $(optionIdPrefix + "_day");
+
+        var days = this.getDaysInMonth(month, year);
+
+        //remove days
+        for (var i = dayEl.options.length - 1; i >= 0; i--) {
+            if (dayEl.options[i].value > days) {
+                dayEl.remove(dayEl.options[i].index);
+            }
+        }
+
+        // add days
+        var lastDay = parseInt(dayEl.options[dayEl.options.length-1].value);
+        for (i = lastDay + 1; i <= days; i++) {
+            this.addOption(dayEl, i, i);
+        }
+    },
+
+    addOption: function(select, text, value)
+    {
+        var option = document.createElement('OPTION');
+        option.value = value;
+        option.text = text;
+
+        if (select.options.add) {
+            select.options.add(option);
+        } else {
+            select.appendChild(option);
+        }
+    }
+});
+dateOption = new DateOption();
+//]]>
+</script>
+
+
+<script type="text/javascript">
+//<![CDATA[
+enUS = {"__className":"stdClass","m":{"__className":"stdClass","wide":["January","February","March","April","May","June","July","August","September","October","November","December"],"abbr":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]}}; // en_US locale reference
+Calendar._DN = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]; // full day names
+Calendar._SDN = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]; // short day names
+Calendar._FD = 0; // First day of the week. "0" means display Sunday first, "1" means display Monday first, etc.
+Calendar._MN = ["January","February","March","April","May","June","July","August","September","October","November","December"]; // full month names
+Calendar._SMN = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]; // short month names
+Calendar._am = "AM"; // am/pm
+Calendar._pm = "PM";
+
+// tooltips
+Calendar._TT = {};
+Calendar._TT["INFO"] = 'About the calendar';
+
+Calendar._TT["ABOUT"] =
+'DHTML Date/Time Selector\n' +
+"(c) dynarch.com 2002-2005 / Author: Mihai Bazon\n" +
+'For latest version visit: http://www.dynarch.com/projects/calendar/\n' +
+'Distributed under GNU LGPL. See http://gnu.org/licenses/lgpl.html for details.' +
+'\n\n' +
+'Date selection:\n' +
+'- Use the \xab, \xbb buttons to select year\n' +
+'- Use the \u2039 buttons to select month\n' +
+'- Hold mouse button on any of the above buttons for faster selection.';
+Calendar._TT["ABOUT_TIME"] = '\n\n' +
+'Time selection:\n' +
+'- Click on any of the time parts to increase it\n' +
+'- or Shift-click to decrease it\n' +
+'- or click and drag for faster selection.';
+
+Calendar._TT["PREV_YEAR"] = 'Prev. year (hold for menu)';
+Calendar._TT["PREV_MONTH"] = 'Prev. month (hold for menu)';
+Calendar._TT["GO_TODAY"] = 'Go Today';
+Calendar._TT["NEXT_MONTH"] = 'Next month (hold for menu)';
+Calendar._TT["NEXT_YEAR"] = 'Next year (hold for menu)';
+Calendar._TT["SEL_DATE"] = 'Select date';
+Calendar._TT["DRAG_TO_MOVE"] = 'Drag to move';
+Calendar._TT["PART_TODAY"] = ' (' + "today" + ')';
+
+// the following is to inform that "%s" is to be the first day of week
+Calendar._TT["DAY_FIRST"] = 'Display %s first';
+
+// This may be locale-dependent. It specifies the week-end days, as an array
+// of comma-separated numbers. The numbers are from 0 to 6: 0 means Sunday, 1
+// means Monday, etc.
+Calendar._TT["WEEKEND"] = "0,6";
+
+Calendar._TT["CLOSE"] = 'Close';
+Calendar._TT["TODAY"] = "today";
+Calendar._TT["TIME_PART"] = '(Shift-)Click or drag to change value';
+
+// date formats
+Calendar._TT["DEF_DATE_FORMAT"] = "%b %e, %Y";
+Calendar._TT["TT_DATE_FORMAT"] = "%B %e, %Y";
+
+Calendar._TT["WK"] = "Week";
+Calendar._TT["TIME"] = 'Time:';
+//]]>
+</script>
+</div>
+
+<div class="product-options-bottom">
+    
+
+                        
+    <div class="price-box">
+                                                                <span class="regular-price" id="product-price-242596_clone">
+                                            <span class="price">$5,970.00</span>                                    </span>
+                        
+        </div>
+
+    <div class="add-to-cart">
+                <div class="qty-wrapper">
+            <label for="qty">Qty:</label>
+            <input type="text" pattern="\d*" name="qty" id="qty" maxlength="12" value="1" title="Qty" class="input-text qty">
+        </div>
+                <div class="add-to-cart-buttons">
+            <button type="button" title="Add to Cart" class="button btn-cart" onclick="productAddToCartForm.submit(this)"><span><span>Add to Cart</span></span></button>
+                    </div>
+        <div id="request-stock-notification" class="request-stock-notification">
+            <div class="input-box">
+                <input name="notifyme-email" id="notifyme-email" tabindex="10" type="email" placeholder="Email Address">
+            </div>
+            <div tabindex="11" class="submit-button button">Notify Me</div>
+            <div class="stock-notification-loader">
+                <img src="https://www.stadiumgoods.com/skin/frontend/stadium/default/images/stadiumloader.gif" alt="Processing" title="Processing" class="v-middle">
+            </div>
+            <div class="message"></div>
+        </div>
+    </div>
+</div>
+                    
+                    
+                    
+
+
+
+                    <div class="add-to-cart-wrapper">
+                        
+                        
+
+                                            </div>
+                </div>
+
+                                                                    <nav class="product-modal-links">
+                    <span class="product-modal-links__item" data-product-modal-target="product-modal-sizing" data-injection-modal-target="modal-product">Sizing</span>
+
+                                        <span class="product-modal-links__item" data-product-modal-target="product-modal-share" data-injection-modal-target="modal-product">Share</span>
+                    <script type="text/javascript">// <![CDATA[
+    var isRenderedProduct = setInterval(function() {
+        var a = document.getElementsByClassName('affirm-as-low-as')[0];
+        if ( a.innerHTML !== "") {
+            var b = a.innerHTML.replace('As low as ','').replace('nth with Affirm','').replace('Starting at','');
+            a.innerHTML = b;
+            a.style.visibility = 'visible';
+            document.getElementsByClassName('affirm-item')[0].style.display = 'inline-block';
+            clearInterval(isRenderedProduct);
+        }
+    }, 100);
+
+    // ]]></script>
+
+<span class="product-modal-links__item affirm-item" style="display: inline-block;">or as little as    <a class="affirm-product-modal" data-amount="597000" style="cursor: pointer;">
+        <span class="affirm-as-low-as" data-amount="597000" data-promo-id="DQMDZVWSD0B22R4D" data-learnmore-show="false" data-affirm-type="text" style="visibility: visible;"><span class="affirm-ala-price">$526</span>/mo</span>
+    </a>
+</span>
+                    
+                </nav>
+
+                <div class="product-info">
+                                            <h4>Details</h4>
+                                                    <div class="info-content">    <h2>Details</h2>
+    <div class="std">
+        Supreme made sure fans could travel in style with its Rimowa collaboration for spring 2018. Supreme worked with the premium luggage maker to create a heavy-duty Topas Multiwheel 45L suitcase. The carry-on case has the grooved aluminum construction that Rimowa is known for and the iconic Supreme logo is wrapped around the bottom. TSA combination locks and internal dividers keep all the suitcase's contents secure.    </div>
+</div>
+                                                    <div class="info-content">    <h2>Additional Information</h2>
+    <table class="data-table" id="product-attribute-specs-table">
+        <tbody>
+                    <tr class="first odd">
+                <th class="label">Manufacturer Sku</th>
+                <td class="data last">SU4216</td>
+            </tr>
+                    <tr class="even">
+                <th class="label">Nickname</th>
+                <td class="data last">SS 18</td>
+            </tr>
+                    <tr class="odd">
+                <th class="label">Gender</th>
+                <td class="data last">Mens</td>
+            </tr>
+                    <tr class="even">
+                <th class="label">Colorway</th>
+                <td class="data last">RED</td>
+            </tr>
+                    <tr class="last odd">
+                <th class="label">Materials</th>
+                <td class="data last">Multi</td>
+            </tr>
+                </tbody>
+    </table>
+    <script type="text/javascript">decorateTable('product-attribute-specs-table')</script>
+</div>
+                                                    <div class="info-content">
+<div class="box-collateral box-reviews" id="customer-reviews">
+                <p class="no-rating"><a href="https://www.stadiumgoods.com/review/product/list/id/242596/#review-form">Be the first to review this product</a></p>
+        </div>
+</div>
+                                                            </div>
+
+                <div class="product-rma">
+                                            <h4><span style="color: #a31f26;">NEW!</span> Accepting Returns</h4>
+<p>We accept returns for store credit, within 3 business days of receipt. Items must be tagged and in new/unworn condition. Read more <a href="https://www.stadiumgoods.com/delivery-and-returns" style="color: #a31f26; text-decoration: underline;" target="_blank">h<span style="color: #800000; text-decoration: underline;">ere</span></a><span style="color: #800000;">.</span></p>
+<h4></h4>
+<h4>100% Authenticity, Guaranteed</h4>
+<p>We carefully inspect every shoe with a fine toothed comb, twice, to validate its authenticity, and to check for conditional/manufacturing issues to ensure all of our items are pristine . We stand behind every item we sell, so you can feel safe about buying. Learn more about our policies <a href="https://www.stadiumgoods.com/authenticity" style="color: #a31f26; text-decoration: underline;" target="_blank">he<span style="color: #800000; text-decoration: underline;">re</span></a><span style="color: #800000;">.</span></p>                                    </div>
+
+                <!-- product modals -->
+                <div class="product-modal" id="product-modal-sizing">
+                    <div class="product-modal__header">
+                        Sizing                    </div>
+                                            <div>Sizes information is not available</div>
+                                    <div class="close"></div></div>
+                <div class="product-modal" id="product-modal-share">
+                    <header class="product-modal__header">
+                        Share                    </header>
+                    <div class="product-modal__content">
+                        
+
+<ul class="sharing-links">
+
+                    <li>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.stadiumgoods.com%2Frimowa-topas-multiwheel-45l-su4216-red&amp;src=sdkpreparse" target="_blank" title="Share on Facebook" class="js-social-share link-facebook link-social">
+            <span>&nbsp;</span>
+        </a>
+    </li>
+    <li>
+        <a href="https://twitter.com/share?text=RIMOWA+Topas+Multiwheel+45L&amp;url=https%3A%2F%2Fwww.stadiumgoods.com%2Frimowa-topas-multiwheel-45l-su4216-red" target="_blank" title="Share on Twitter" class="js-social-share link-twitter link-social">
+            <span>&nbsp;</span>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" href="https://pinterest.com/pin/create/button/?description=RIMOWA+Topas+Multiwheel+45L&amp;media=https%3A%2F%2Fwww.stadiumgoods.com%2Fmedia%2Fcatalog%2Fproduct%2Fcache%2F1%2Fimage%2F9df78eab33525d08d6e5fb8d27136e95%2Fs%2Fu%2Fsu4216_1.png&amp;url=https%3A%2F%2Fwww.stadiumgoods.com%2Frimowa-topas-multiwheel-45l-su4216-red" title="Share on Pinterest" class="js-social-share link-pinterest link-social">
+            <span>&nbsp;</span>
+        </a>
+    </li>
+</ul>
+                    </div>
+                <div class="close"></div></div>
+
+            </div>
+            <div class="product-gallery">
+                <div id="widget-cmsblockschedule-container-a449234d89632dc9b69caf7fd67d6cb5">
+    <div class="widget widget-static-block widget-cmsblockschedule before-block" style="display:none;">
+            </div>
+    <div class="widget widget-static-block widget-cmsblockschedule during-block" style="display:none;">
+        <p style="color: #a41d23; font-style: italic; font-weight: bold; text-align: center;">Celebrate Spring with Stadium Goods! Enjoy 15% off site-wide until <span id="countdown-timer-6c4afacadbcc9b28dc323857720003db"></span>
+<script type="text/javascript">
+//<![CDATA[
+new CountdownTimer({
+    selector: '#countdown-timer-6c4afacadbcc9b28dc323857720003db',
+    dateStart: new Date('2019-03-15T03:10:01.000Z'),
+    dateEnd: new Date('2017-03-21T03:59:59.000Z'),
+    msgPattern: "{hours}:{minutes}:{seconds}",
+    leadingZeros: true
+});
+//]]>
+</script>
+</p>    </div>
+    <div class="widget widget-static-block widget-cmsblockschedule after-block" style="">
+            </div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+jQuery(document).ready(function() {
+    function utcTimestamp(date) {
+        var utcTimestamp = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
+          date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds(), date.getUTCMilliseconds());
+
+        return utcTimestamp / 1000;
+    }
+
+    var startTimestamp = 1489982400;
+    var endTimestamp = 1490068799;
+    var beforeShowed = false;
+    var duringShowed = false;
+    var afterShowed = false;
+
+    setInterval(function() {
+        var now = new Date();
+        var currentTimestamp = utcTimestamp(now);
+
+        if(currentTimestamp < startTimestamp) {
+            if(!beforeShowed) {
+                jQuery('#widget-cmsblockschedule-container-a449234d89632dc9b69caf7fd67d6cb5 .before-block').show();
+                jQuery('#widget-cmsblockschedule-container-a449234d89632dc9b69caf7fd67d6cb5 .during-block').hide();
+                jQuery('#widget-cmsblockschedule-container-a449234d89632dc9b69caf7fd67d6cb5 .after-block').hide();
+                beforeShowed = true;
+            }
+        } else if(currentTimestamp >= startTimestamp && currentTimestamp <= endTimestamp) {
+            if(!duringShowed) {
+                jQuery('#widget-cmsblockschedule-container-a449234d89632dc9b69caf7fd67d6cb5 .before-block').hide();
+                jQuery('#widget-cmsblockschedule-container-a449234d89632dc9b69caf7fd67d6cb5 .during-block').show();
+                jQuery('#widget-cmsblockschedule-container-a449234d89632dc9b69caf7fd67d6cb5 .after-block').hide();
+                duringShowed = true;
+            }
+
+        } else if(currentTimestamp > endTimestamp) {
+            if(!afterShowed) {
+                jQuery('#widget-cmsblockschedule-container-a449234d89632dc9b69caf7fd67d6cb5 .before-block').hide();
+                jQuery('#widget-cmsblockschedule-container-a449234d89632dc9b69caf7fd67d6cb5 .during-block').hide();
+                jQuery('#widget-cmsblockschedule-container-a449234d89632dc9b69caf7fd67d6cb5 .after-block').show();
+                afterShowed = true;
+            }
+
+        }
+    }, 1000);
+});
+//]]>
+</script>
+<div id="widget-cmsblockschedule-container-8a849915578419189d148971b7ed9b5c">
+    <div class="widget widget-static-block widget-cmsblockschedule before-block" style="display:none;">
+            </div>
+    <div class="widget widget-static-block widget-cmsblockschedule during-block" style="display:none;">
+        <p style="color: #a41d23; font-style: italic; font-weight: bold; text-align: center;">Happy Memorial Day! 15% off today only&nbsp;<span id="countdown-timer-ea43dcc9ceae9fbd461397b596d4bdc1"></span>
+<script type="text/javascript">
+//<![CDATA[
+new CountdownTimer({
+    selector: '#countdown-timer-ea43dcc9ceae9fbd461397b596d4bdc1',
+    dateStart: new Date('2019-03-15T03:10:01.000Z'),
+    dateEnd: new Date('2017-05-30T03:59:59.000Z'),
+    msgPattern: "{hours}:{minutes}:{seconds}",
+    leadingZeros: true
+});
+//]]>
+</script>
+</p>    </div>
+    <div class="widget widget-static-block widget-cmsblockschedule after-block" style="">
+            </div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+jQuery(document).ready(function() {
+    function utcTimestamp(date) {
+        var utcTimestamp = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
+          date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds(), date.getUTCMilliseconds());
+
+        return utcTimestamp / 1000;
+    }
+
+    var startTimestamp = 1496030400;
+    var endTimestamp = 1496116799;
+    var beforeShowed = false;
+    var duringShowed = false;
+    var afterShowed = false;
+
+    setInterval(function() {
+        var now = new Date();
+        var currentTimestamp = utcTimestamp(now);
+
+        if(currentTimestamp < startTimestamp) {
+            if(!beforeShowed) {
+                jQuery('#widget-cmsblockschedule-container-8a849915578419189d148971b7ed9b5c .before-block').show();
+                jQuery('#widget-cmsblockschedule-container-8a849915578419189d148971b7ed9b5c .during-block').hide();
+                jQuery('#widget-cmsblockschedule-container-8a849915578419189d148971b7ed9b5c .after-block').hide();
+                beforeShowed = true;
+            }
+        } else if(currentTimestamp >= startTimestamp && currentTimestamp <= endTimestamp) {
+            if(!duringShowed) {
+                jQuery('#widget-cmsblockschedule-container-8a849915578419189d148971b7ed9b5c .before-block').hide();
+                jQuery('#widget-cmsblockschedule-container-8a849915578419189d148971b7ed9b5c .during-block').show();
+                jQuery('#widget-cmsblockschedule-container-8a849915578419189d148971b7ed9b5c .after-block').hide();
+                duringShowed = true;
+            }
+
+        } else if(currentTimestamp > endTimestamp) {
+            if(!afterShowed) {
+                jQuery('#widget-cmsblockschedule-container-8a849915578419189d148971b7ed9b5c .before-block').hide();
+                jQuery('#widget-cmsblockschedule-container-8a849915578419189d148971b7ed9b5c .during-block').hide();
+                jQuery('#widget-cmsblockschedule-container-8a849915578419189d148971b7ed9b5c .after-block').show();
+                afterShowed = true;
+            }
+
+        }
+    }, 1000);
+});
+//]]>
+</script>
+                
+            <div class="product-gallery-image">
+            <img itemprop="image" src="https://www.stadiumgoods.com/media/catalog/product/cache/1/base/1000x600/9df78eab33525d08d6e5fb8d27136e95/s/u/su4216_1.png" alt="Supreme RIMOWA Topas Multiwheel 45L &quot;SS 18&quot; - SU4216" title="Supreme RIMOWA Topas Multiwheel 45L &quot;SS 18&quot; - SU4216">
+        </div>
+            <div class="product-gallery-image">
+            <img itemprop="image" src="https://www.stadiumgoods.com/media/catalog/product/cache/1/base/1000x600/9df78eab33525d08d6e5fb8d27136e95/s/u/su4216_2.png" alt="Supreme RIMOWA Topas Multiwheel 45L &quot;SS 18&quot; - SU4216" title="Supreme RIMOWA Topas Multiwheel 45L &quot;SS 18&quot; - SU4216">
+        </div>
+            <div class="product-gallery-image">
+            <img itemprop="image" src="https://www.stadiumgoods.com/media/catalog/product/cache/1/base/1000x600/9df78eab33525d08d6e5fb8d27136e95/s/u/su4216_3.png" alt="Supreme RIMOWA Topas Multiwheel 45L &quot;SS 18&quot; - SU4216" title="Supreme RIMOWA Topas Multiwheel 45L &quot;SS 18&quot; - SU4216">
+        </div>
+                </div>
+        </section>
