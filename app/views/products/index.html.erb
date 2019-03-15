@@ -30,11 +30,15 @@
             <div class="product-image8">
               <a href="<%=product_path(item.id)%>">
                 <% if item.product_image_1.attached? %> 
-                  <img class="pic-1" <%= image_tag url_for(item.product_image_1) %>>
-                <% end %>
+                    <%= image_tag url_for(item.product_image_1), :class => "pic-1" %>   
+                <% else %>
+                    <img class="pic-1" src="https://www.remax-tresamigos-cr.com/sites/default/files/default_images/noimage.gif">
+                <% end %>      
                 <% if item.product_image_2.attached? %> 
-                  <img class="pic-2" <%= image_tag url_for(item.product_image_2) %>>
-                <% end %>
+                    <%= image_tag url_for(item.product_image_2), :class => "pic-2" %>   
+                <% else %>
+                    <img class="pic-2" src="https://www.remax-tresamigos-cr.com/sites/default/files/default_images/noimage.gif">
+                <% end %>  
               </a>
               <% if @user == nil %>
                 <center><%= button_to "Add To Cart", new_user_session_path, id: "add_#{item.id}_to_cart", class: "fa fa-shopping-cart" %></center>
