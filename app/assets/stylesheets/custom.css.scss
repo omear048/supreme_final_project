@@ -459,7 +459,14 @@ h3.h3{text-align:center;margin:1em;text-transform:capitalize;font-size:1.7em;}
 }
 
 
-/* The side navigation menu */
+.product-details-large{
+  position: relative;
+  left: 30px;
+  border: 3px solid #73AD21;
+};
+
+
+/* The filter navigation menu */
 .filter_options_container {
   background: white;
   text-align: center;
@@ -503,109 +510,3 @@ option {
 
 
 
-
-element.style {
-}
-.main {
-    display: -ms-flexbox;
-    display: flex;
-}
-#modal-search input, .checkout-amazon-payments-index #checkout-step-login #opc-facebookconnect-wrapper:after, .checkout-onepage-index #checkout-step-login #opc-facebookconnect-wrapper:after, .customer-account-login #amazon-buttons-wrapper p, .customer-account-login #facebookconnect_wrapper:after, .paypal-express-review #checkout-step-login #opc-facebookconnect-wrapper:after, a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-}
-
-*, :after, :before {
-    box-sizing: border-box;
-}
-*, :after, :before {
-    box-sizing: inherit;
-}
-user agent stylesheet
-div {
-    display: block;
-}
-#modal-search input, .checkout-amazon-payments-index #checkout-step-login #opc-facebookconnect-wrapper:after, .checkout-onepage-index #checkout-step-login #opc-facebookconnect-wrapper:after, .customer-account-login #amazon-buttons-wrapper p, .customer-account-login #facebookconnect_wrapper:after, .paypal-express-review #checkout-step-login #opc-facebookconnect-wrapper:after, a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-}
-#modal-search input, .checkout-amazon-payments-index #checkout-step-login #opc-facebookconnect-wrapper:after, .checkout-onepage-index #checkout-step-login #opc-facebookconnect-wrapper:after, .customer-account-login #amazon-buttons-wrapper p, .customer-account-login #facebookconnect_wrapper:after, .paypal-express-review #checkout-step-login #opc-facebookconnect-wrapper:after, a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-}
-#modal-search input, .checkout-amazon-payments-index #checkout-step-login #opc-facebookconnect-wrapper:after, .checkout-onepage-index #checkout-step-login #opc-facebookconnect-wrapper:after, .customer-account-login #amazon-buttons-wrapper p, .customer-account-login #facebookconnect_wrapper:after, .paypal-express-review #checkout-step-login #opc-facebookconnect-wrapper:after, a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-}
-body {
-    font-family: Proxima Nova,Helvetica,Arial,sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    background: #fff;
-    color: #131313;
-    min-height: 100%;
-    letter-spacing: .035em;
-    overflow-x: hidden;
-}
-body {
-    line-height: 1;
-}
-#modal-search input, .checkout-amazon-payments-index #checkout-step-login #opc-facebookconnect-wrapper:after, .checkout-onepage-index #checkout-step-login #opc-facebookconnect-wrapper:after, .customer-account-login #amazon-buttons-wrapper p, .customer-account-login #facebookconnect_wrapper:after, .paypal-express-review #checkout-step-login #opc-facebookconnect-wrapper:after, a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-}
-html {
-    -webkit-text-size-adjust: 100%;
-    height: 100%;
-}
-#modal-search input, .checkout-amazon-payments-index #checkout-step-login #opc-facebookconnect-wrapper:after, .checkout-onepage-index #checkout-step-login #opc-facebookconnect-wrapper:after, .customer-account-login #amazon-buttons-wrapper p, .customer-account-login #facebookconnect_wrapper:after, .paypal-express-review #checkout-step-login #opc-facebookconnect-wrapper:after, a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-}
-.main:after, .main:before {
-    content: "";
-    display: table;
-}
-*, :after, :before {
-    box-sizing: border-box;
-}
-*, :after, :before {
-    box-sizing: inherit;
-}
-.main:after {
-    clear: both;
-}
-.main:after, .main:before {
-    content: "";
-    display: table;
-}
-*, :after, :before {
-    box-sizing: border-box;
-}
-*, :after, :before {
-    box-sizing: inherit;
-}
